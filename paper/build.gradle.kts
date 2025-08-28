@@ -27,8 +27,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
 
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
-    compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:2.2.3")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.0.1")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.0.1")
 
     compileOnly("org.incendo:cloud-paper:2.0.0-beta.10")
 
