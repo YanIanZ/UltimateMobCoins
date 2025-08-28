@@ -4,8 +4,11 @@ EcoMobs:
   enabled: true
 HeadDatabase:
   enabled: true
+# Added placeholders to MiniPlaceholders v3
+# MiniPlaceholders v2 is not supported!
 MiniPlaceholders:
-  enabled: true
+  # This is 'false' by default because v3 of MiniPlaceholders is only compatible with 1.21+
+  enabled: false
 MythicMobs:
   enabled: true
 PlaceholderAPI:
