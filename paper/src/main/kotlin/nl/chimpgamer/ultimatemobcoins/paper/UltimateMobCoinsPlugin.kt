@@ -167,7 +167,8 @@ class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
             val shopFiles = listOf(
                 "main_menu.yml",
                 "rotating_shop.yml",
-                "shop.yml"
+                "shop.yml",
+                "shop_with_timer.yml"
             )
             for (shopFile in shopFiles) {
                 val inJarPath = "shops/$shopFile"
