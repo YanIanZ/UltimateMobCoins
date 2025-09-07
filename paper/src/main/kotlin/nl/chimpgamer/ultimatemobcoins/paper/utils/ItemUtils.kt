@@ -198,16 +198,10 @@ object ItemUtils {
                 }
             } else if (name == "potion") {
                 if (itemStack.itemMeta is PotionMeta) {
-                    val potionParts = value.split("#")
-
-                    val potionTypeName = potionParts[0].trim()
-                    val extended = potionParts[1].trim().toBooleanStrictOrNull() ?: false
-                    val upgraded = potionParts[2].trim().toBooleanStrictOrNull() ?: false
-
                     val potionType =
-                        PotionType.entries.firstOrNull { potionTypeName.equals(it.name, ignoreCase = true) }
+                        PotionType.entries.firstOrNull { value.equals(it.name, ignoreCase = true) }
                     if (potionType != null) {
-                        itemStack = itemStack.potion(potionType, extended, upgraded)
+                        itemStack = itemStack.potion(potionType)
                     }
                 }
             } else if (name == "color") {

@@ -10,7 +10,6 @@ import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.pdc
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.setBoolean
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.setDouble
-import nl.chimpgamer.ultimatemobcoins.paper.listeners.EntityListener.EarningEntry
 import nl.chimpgamer.ultimatemobcoins.paper.models.MobCoin
 import nl.chimpgamer.ultimatemobcoins.paper.utils.NamespacedKeys
 import org.bukkit.entity.Player

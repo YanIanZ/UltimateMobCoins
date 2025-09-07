@@ -137,7 +137,7 @@ class SpinnerMenu(private val plugin: UltimateMobCoinsPlugin) : InventoryProvide
     }.toList()
 
     private fun moveItems(contents: InventoryContents) {
-        val items = (FIRST_SLOT..LAST_SLOT - 1).map { 
+        val items = (FIRST_SLOT..<LAST_SLOT).map {
             contents[it].orElse(null)?.itemStack 
         }
         

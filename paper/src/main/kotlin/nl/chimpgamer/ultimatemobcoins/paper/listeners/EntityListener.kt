@@ -2,9 +2,6 @@ package nl.chimpgamer.ultimatemobcoins.paper.listeners
 
 import com.github.shynixn.mccoroutine.folia.entityDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
-import java.math.BigDecimal
-import java.time.Instant
-import java.time.temporal.ChronoUnit
 import com.github.shynixn.mccoroutine.folia.ticks
 import kotlinx.coroutines.delay
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
@@ -22,12 +19,8 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.metadata.FixedMetadataValue
-import java.math.MathContext
 
 class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
-    private val recentEarnings = mutableMapOf<String, MutableList<EarningEntry>>()
-
-    private data class EarningEntry(val amount: BigDecimal, val timestamp: Instant)
 
     @EventHandler(ignoreCancelled = true)
     suspend fun EntityDeathEvent.onEntityDeath() {

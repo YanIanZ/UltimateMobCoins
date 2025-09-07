@@ -32,7 +32,7 @@ object NumberFormatter {
     fun displayCurrency(value: BigDecimal?): String {
         var str = PRETTY_FORMAT.format(value)
         if (str.endsWith(".00")) {
-            str = str.substring(0, str.length - 3)
+            str = str.dropLast(3)
         }
         return str
     }

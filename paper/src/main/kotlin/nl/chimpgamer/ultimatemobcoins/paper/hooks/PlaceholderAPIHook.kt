@@ -35,13 +35,10 @@ class PlaceholderAPIHook(private val plugin: UltimateMobCoinsPlugin) : Placehold
 
         if (params.startsWith("leaderboard_mobcoins_", ignoreCase = true)) {
             val newParams = params.replaceFirst("leaderboard_mobcoins_", "")
-            val position = newParams.substring(0, newParams.indexOfFirst { it == '_' }).toInt()
+            val position = newParams.take(newParams.indexOfFirst { it == '_' }).toInt()
 
             val type = newParams.replaceFirst("${position}_", "")
-            val user = plugin.leaderboardManager.getTopMobCoinsPosition(position)
-            if (user == null) {
-                return "..."
-            }
+            val user = plugin.leaderboardManager.getTopMobCoinsPosition(position) ?: return "..."
             return when (type.lowercase()) {
                 "name" -> user.username
                 "value" -> user.coins.toString()
@@ -51,13 +48,10 @@ class PlaceholderAPIHook(private val plugin: UltimateMobCoinsPlugin) : Placehold
         }
         if (params.startsWith("leaderboard_mobcoins_grind_", ignoreCase = true)) {
             val newParams = params.replaceFirst("leaderboard_mobcoins_grind_", "")
-            val position = newParams.substring(0, newParams.indexOfFirst { it == '_' }).toInt()
+            val position = newParams.take(newParams.indexOfFirst { it == '_' }).toInt()
 
             val type = newParams.replaceFirst("${position}_", "")
-            val user = plugin.leaderboardManager.getTopMobCoinsGrindPosition(position)
-            if (user == null) {
-                return "..."
-            }
+            val user = plugin.leaderboardManager.getTopMobCoinsGrindPosition(position) ?: return "..."
             return when (type.lowercase()) {
                 "name" -> user.username
                 "value" -> user.coins.toString()

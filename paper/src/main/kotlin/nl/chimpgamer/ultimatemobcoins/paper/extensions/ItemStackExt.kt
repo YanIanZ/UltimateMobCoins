@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.*
 import org.bukkit.material.Colorable
-import org.bukkit.potion.PotionData
 import org.bukkit.potion.PotionType
 import java.util.*
 import kotlin.collections.ArrayList
@@ -163,10 +162,10 @@ fun ItemStack.customSkull(data: String): ItemStack {
     return this
 }
 
-fun ItemStack.potion(potionType: PotionType, extended: Boolean = false, upgraded: Boolean = false): ItemStack {
+fun ItemStack.potion(potionType: PotionType): ItemStack {
     meta {
         if (this is PotionMeta) {
-            this.basePotionData = PotionData(potionType, extended, upgraded)
+            this.basePotionType = potionType
         }
     }
     return this
