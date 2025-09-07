@@ -37,10 +37,6 @@ class CloudCommandManager(private val plugin: UltimateMobCoinsPlugin) {
             paperCommandManager.captionRegistry().apply {
                 registerProvider(CaptionProvider.constantProvider(StandardCaptionKeys.EXCEPTION_NO_PERMISSION, plugin.messagesConfig.noPermission))
                 registerProvider(CaptionProvider.forCaption(UltimateMobCoinsCaptionKeys.ARGUMENT_PARSE_FAILURE_MENU) { sender -> "Menu '{input}' does not exist!" })
-                /*registerProvider(CaptionProvider.forCaption(Caption.of("help.minecraft.help")) { sender -> plugin.messagesConfig.commandHelpTitle } )
-                registerProvider(CaptionProvider.forCaption(Caption.of("help.minecraft.showing_results_for_query")) { sender -> plugin.messagesConfig.commandHelpShowingResultsForQuery } )
-                registerProvider(CaptionProvider.forCaption(Caption.of("help.minecraft.no_results_for_query")) { sender -> plugin.messagesConfig.commandHelpNoResultsForQuery } )
-                registerProvider(CaptionProvider.forCaption(Caption.of("help.minecraft.available_commands")) { sender -> plugin.messagesConfig.commandHelpAvailableCommands } )*/
             }
 
             MinecraftExceptionHandler.createNative<CommandSender>()

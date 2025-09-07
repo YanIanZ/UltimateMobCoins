@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.0.1")
     compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.0.1")

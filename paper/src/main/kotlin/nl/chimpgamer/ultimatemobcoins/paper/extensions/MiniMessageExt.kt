@@ -18,12 +18,12 @@ private val miniMessageTagRegex = Regex("<[!?#]?[a-z0-9_-]*>")
 fun String.parse() = miniMessage().deserialize(this).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
 
 fun String.parse(tagResolver: TagResolver) = miniMessage().deserialize(this, tagResolver).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
-fun String.parse(player: Player?, tagResolver: TagResolver) = miniMessage().deserialize(this,
+fun String.parse(player: Player, tagResolver: TagResolver) = miniMessage().deserialize(this, player,
     TagResolver.resolver(placeholderAPIPlaceholdersToTagResolver(player), miniPlaceholdersToTagResolver(player), tagResolver)
 ).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
 
 fun String.parse(replacements: Map<String, *>) = parse(replacements.toTagResolver())
-fun String.parse(player: Player?, replacements: Map<String, *>) = parse(player, replacements.toTagResolver())
+fun String.parse(player: Player, replacements: Map<String, *>) = parse(player, replacements.toTagResolver())
 
 fun String.isValid(): Boolean = miniMessage().deserializeOrNull(this) != null
 
@@ -40,9 +40,9 @@ fun Map<String, *>.toTagResolver(parsed: Boolean = false) = TagResolver.resolver
 internal fun miniPlaceholdersToTagResolver(player: Player?): TagResolver {
     if (isMiniPlaceholders) {
         return if (player == null) {
-            MiniPlaceholders.getGlobalPlaceholders()
+            MiniPlaceholders.globalPlaceholders()
         } else {
-            MiniPlaceholders.getAudienceGlobalPlaceholders(player)
+            MiniPlaceholders.audienceGlobalPlaceholders()
         }
     }
     return TagResolver.empty()

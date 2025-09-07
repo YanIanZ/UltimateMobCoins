@@ -14,7 +14,7 @@ import kotlin.reflect.KClass
 class MenuConfig(plugin: UltimateMobCoinsPlugin, val file: File) {
     val config: YamlDocument
 
-    val menuType: MenuType get() = config.getEnum("type", MenuType::class.java, MenuType.NORMAL)
+    val menuType: MenuType get() = getEnum("type", MenuType::class, MenuType.NORMAL)
 
     fun hasResetTimer(): Boolean {
         val refreshTime = config.getLong("refresh_time")
