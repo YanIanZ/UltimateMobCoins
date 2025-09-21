@@ -19,6 +19,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.incendo.cloud.CommandManager
+import org.incendo.cloud.component.CommandComponent
 import org.incendo.cloud.component.DefaultValue
 import org.incendo.cloud.key.CloudKey
 import org.incendo.cloud.kotlin.coroutines.extension.suspendingHandler
@@ -53,11 +54,19 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
         val minimumKey = CloudKey.of("minimum", Double::class.java)
         val maximumKey = CloudKey.of("maximum", Double::class.java)
 
+        val withdrawAmountArgument = if (plugin.settingsConfig.commandWithdrawAmountDoubleType) {
+            CommandComponent.builder<CommandSender, Double>()
+                .parser(doubleParser(0.1, plugin.settingsConfig.commandWithdrawAmountMax))
+        } else {
+            CommandComponent.builder<CommandSender, Int>()
+                .parser(integerParser(1, plugin.settingsConfig.commandWithdrawAmountMax.toInt()))
+        }.name("amount").required().build()
+
         val silentFlag = commandManager.flagBuilder("silent").withAliases("s").build()
 
         val optionalShopArgument = MenuParser.menuComponent<CommandSender>()
             .name("menu")
-            .optional(DefaultValue.dynamic { ctx -> plugin.shopMenus[plugin.settingsConfig.commandDefaultShop]!! })
+            .optional(DefaultValue.dynamic { _ -> plugin.shopMenus[plugin.settingsConfig.commandDefaultShop]!! })
             .build()
 
         val requiredShopArgument = MenuParser.menuComponent<CommandSender>()
@@ -449,7 +458,7 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
             .senderType(Player::class.java)
             .literal("withdraw")
             .permission("$basePermission.withdraw")
-            .required(amountKey, doubleParser(0.1))
+            .argument(withdrawAmountArgument)
             .suspendingHandler { context ->
                 val sender = context.sender()
                 val user = plugin.userManager.getUser(sender.uniqueId)
@@ -457,18 +466,19 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
                     plugin.logger.warning("Something went wrong! Could not get user ${sender.name} (${sender.uniqueId})")
                     return@suspendingHandler
                 }
-                val amount = context[amountKey]
-                if (!user.hasEnough(amount.toBigDecimal())) {
-                    sender.sendMessage(plugin.messagesConfig.mobCoinsNotEnough.parse(mapOf("amount" to amount)))
+                val amount = context[withdrawAmountArgument]
+                val bigDecimalAmount = amount.toDouble().toBigDecimal(MathContext(3))
+                val amountAsDouble = bigDecimalAmount.toDouble()
+
+                if (!user.hasEnough(bigDecimalAmount)) {
+                    sender.sendMessage(plugin.messagesConfig.mobCoinsNotEnough.parse(mapOf("amount" to amountAsDouble)))
                     return@suspendingHandler
                 }
                 if (sender.inventory.firstEmpty() == -1) {
                     sender.sendMessage(plugin.messagesConfig.mobCoinsInventoryFull.parse())
                     return@suspendingHandler
                 }
-                val finalAmount = amount.toBigDecimal(MathContext(3))
-                user.withdrawCoins(finalAmount)
-                val amountAsDouble = finalAmount.toDouble()
+                user.withdrawCoins(bigDecimalAmount)
 
                 val amountPlaceholder = Placeholder.unparsed("amount", amountAsDouble.toString())
                 val mobCoinItem = plugin.settingsConfig.getMobCoinsItem(amountPlaceholder)

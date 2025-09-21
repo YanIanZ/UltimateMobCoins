@@ -89,8 +89,12 @@ command:
   aliases:
     - mobcoin
   default_shop: main_menu
+  withdraw:
+    # When disabled, the amount will always be converted to a integer.
+    # Changing this setting requires a server restart.
+    amount-double-type: true
 
 update:
   notify-on-join: true
 
-config-version: 9
+config-version: 10

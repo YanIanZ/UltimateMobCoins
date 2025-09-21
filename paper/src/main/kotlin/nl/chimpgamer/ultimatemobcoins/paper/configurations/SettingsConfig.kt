@@ -61,6 +61,9 @@ class SettingsConfig(private val plugin: UltimateMobCoinsPlugin) {
     val commandAliases: List<String> get() = config.getStringList("command.aliases")
     val commandDefaultShop: String get() = config.getString("command.default_shop")
 
+    val commandWithdrawAmountDoubleType: Boolean get() = config.getBoolean("command.withdraw.amount.double-type", true)
+    val commandWithdrawAmountMax: Double get() = config.getDouble("command.withdraw.amount.max", Double.MAX_VALUE)
+
     val updateNotifyOnJoin: Boolean get() = config.getBoolean("update.notify-on-join", true)
 
     val debug: Boolean get() = config.getBoolean("debug", false)
