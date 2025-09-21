@@ -65,10 +65,9 @@ class RoseStackerListener(private val plugin: UltimateMobCoinsPlugin) : Listener
                 for (drops in entityDrops[entity1]) {
                     var dropAmount =
                         plugin.mobCoinsManager.getCoinDropAmount(killer, mobCoin, dropsMultiplier) ?: continue
+                    dropAmount = plugin.mobCoinsManager.checkRecentEarnings(killer, dropAmount)
                     val mobCoinItem = plugin.mobCoinsManager.createMobCoinItem(dropAmount)
                     if (drops.drops.any { drop -> drop.type == mobCoinItem.type }) continue
-
-                    dropAmount = plugin.mobCoinsManager.checkRecentEarnings(killer, dropAmount)
 
                     val mobCoinDropEvent = MobCoinDropEvent(
                         killer,
