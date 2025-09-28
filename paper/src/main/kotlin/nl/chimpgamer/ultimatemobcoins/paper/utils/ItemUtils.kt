@@ -3,6 +3,8 @@ package nl.chimpgamer.ultimatemobcoins.paper.utils
 import com.destroystokyo.paper.profile.ProfileProperty
 import dev.dejvokep.boostedyaml.block.implementation.Section
 import dev.lone.itemsadder.api.CustomStack
+import io.papermc.paper.registry.RegistryAccess
+import io.papermc.paper.registry.RegistryKey
 import io.th0rgal.oraxen.api.OraxenItems
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
@@ -73,7 +75,7 @@ object ItemUtils {
                 if (nexoItem != null) {
                     itemStack = nexoItem
                 } else {
-                    plugin.logger.info("Could not find nexo item $nexo. Perhaps the nexo items are not loaded yet?")
+                    plugin.logger.info("Could not find nexo item $nexo for ${itemSection.nameAsString}. Perhaps the nexo items are not loaded yet?")
                 }
             } else {
                 plugin.logger.info("Could not use nexo. Nexo is not installed or enabled!")
@@ -159,7 +161,7 @@ object ItemUtils {
                     if (nexoItem != null) {
                         itemStack = nexoItem
                     } else {
-                        plugin.logger.info("Could not find nexo item $value")
+                        plugin.logger.info("Could not find nexo item $value. Perhaps the nexo items are not loaded yet?")
                     }
                 } else {
                     plugin.logger.info("Could not use nexo. nexo is not installed or enabled!")
@@ -202,7 +204,8 @@ object ItemUtils {
                 val level = enchantmentParts[1].trim().toIntOrNull() ?: -1
 
                 val enchantment =
-                    runCatching { Enchantment.getByKey(NamespacedKey.minecraft(enchantmentName)) }.getOrNull()
+                    runCatching { RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT)
+                        .get(NamespacedKey.minecraft(enchantmentName)) }.getOrNull()
                 if (enchantment != null) {
                     itemStack = itemStack.enchantment(enchantment, level)
                 }
