@@ -154,6 +154,17 @@ object ItemUtils {
                 } else {
                     plugin.logger.info("Could not use ItemsAdder. ItemsAdder is not installed or enabled!")
                 }
+            } else if (name == "nexo") {
+                if (isNexoEnabled) {
+                    val nexoItem = NexoItems.itemFromId(value)
+                    if (nexoItem != null) {
+                        itemStack = nexoItem.build()
+                    } else {
+                        plugin.logger.info("Could not find nexo item $value")
+                    }
+                } else {
+                    plugin.logger.info("Could not use nexo. nexo is not installed or enabled!")
+                }
             } else if (name == "amount") {
                 val amount = value.toIntOrNull()
                 if (amount != null) {
@@ -198,10 +209,16 @@ object ItemUtils {
                 }
             } else if (name == "potion") {
                 if (itemStack.itemMeta is PotionMeta) {
+                    val potionParts = value.split("#")
+
+                    val potionTypeName = potionParts[0].trim()
+                    val extended = potionParts[1].trim().toBooleanStrictOrNull() ?: false
+                    val upgraded = potionParts[2].trim().toBooleanStrictOrNull() ?: false
+
                     val potionType =
-                        PotionType.entries.firstOrNull { value.equals(it.name, ignoreCase = true) }
+                        PotionType.entries.firstOrNull { potionTypeName.equals(it.name, ignoreCase = true) }
                     if (potionType != null) {
-                        itemStack = itemStack.potion(potionType)
+                        itemStack = itemStack.potion(potionType, extended, upgraded)
                     }
                 }
             } else if (name == "color") {
