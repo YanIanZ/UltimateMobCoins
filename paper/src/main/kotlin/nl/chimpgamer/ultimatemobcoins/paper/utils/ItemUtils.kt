@@ -1,7 +1,6 @@
 package nl.chimpgamer.ultimatemobcoins.paper.utils
 
 import com.destroystokyo.paper.profile.ProfileProperty
-import com.nexomc.nexo.api.NexoItems
 import dev.dejvokep.boostedyaml.block.implementation.Section
 import dev.lone.itemsadder.api.CustomStack
 import io.th0rgal.oraxen.api.OraxenItems
@@ -25,7 +24,7 @@ import java.util.UUID
 object ItemUtils {
     private val isOraxenEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("Oraxen")
     private val isItemsAdderEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("ItemsAdder")
-    private val isNexoEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("nexo")
+    private val isNexoEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("Nexo")
 
     private val skullOwnerNamespacedKey = NamespacedKey("ultimatemobcoins", "skull_owner")
 
@@ -70,14 +69,14 @@ object ItemUtils {
         if (itemSection.contains("nexo")) {
             if (isNexoEnabled) {
                 val nexo = itemSection.getString("nexo")
-                val nexoItem = NexoItems.itemFromId(nexo)
+                val nexoItem = plugin.hookManager.nexoHook.nexoItem(nexo)
                 if (nexoItem != null) {
-                    itemStack = nexoItem.build()
+                    itemStack = nexoItem
                 } else {
-                    plugin.logger.info("Could not find nexo item $nexo")
+                    plugin.logger.info("Could not find nexo item $nexo. Perhaps the nexo items are not loaded yet?")
                 }
             } else {
-                plugin.logger.info("Could not use nexo. nexo is not installed or enabled!")
+                plugin.logger.info("Could not use nexo. Nexo is not installed or enabled!")
             }
         }
         if (itemSection.contains("name")) {
@@ -156,9 +155,9 @@ object ItemUtils {
                 }
             } else if (name == "nexo") {
                 if (isNexoEnabled) {
-                    val nexoItem = NexoItems.itemFromId(value)
+                    val nexoItem = plugin.hookManager.nexoHook.nexoItem(value)
                     if (nexoItem != null) {
-                        itemStack = nexoItem.build()
+                        itemStack = nexoItem
                     } else {
                         plugin.logger.info("Could not find nexo item $value")
                     }
