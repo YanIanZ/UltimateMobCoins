@@ -4,6 +4,8 @@ EcoMobs:
   enabled: true
 HeadDatabase:
   enabled: true
+Nexo:
+  enabled: true
 MiniPlaceholders:
   enabled: true
 MythicMobs:
@@ -19,4 +21,4 @@ Vault:
 WorldGuard:
   enabled: true
 
-config-version: 3
+config-version: 4
