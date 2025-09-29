@@ -2,10 +2,8 @@ package nl.chimpgamer.ultimatemobcoins.paper.utils
 
 import com.destroystokyo.paper.profile.ProfileProperty
 import dev.dejvokep.boostedyaml.block.implementation.Section
-import dev.lone.itemsadder.api.CustomStack
 import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
-import io.th0rgal.oraxen.api.OraxenItems
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.*
@@ -13,7 +11,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
@@ -42,8 +39,9 @@ object ItemUtils {
         if (itemSection.contains("oraxen")) {
             if (isOraxenEnabled) {
                 val oraxen = itemSection.getString("oraxen")
-                if (OraxenItems.exists(oraxen)) {
-                    itemStack = OraxenItems.getItemById(oraxen).build()
+                val oraxenItem = plugin.hookManager.oraxenHook.oraxenItem(oraxen)
+                if (oraxenItem != null) {
+                    itemStack = oraxenItem
                 } else {
                     plugin.logger.info("Could not find Oraxen item $oraxen")
                 }
@@ -54,9 +52,9 @@ object ItemUtils {
         if (itemSection.contains("itemsadder")) {
             if (isItemsAdderEnabled) {
                 val itemsadder = itemSection.getString("itemsadder")
-                val customStack = CustomStack.getInstance(itemsadder)
-                if (customStack != null) {
-                    itemStack = customStack.itemStack
+                val itemsAdderItem = plugin.hookManager.itemsAdderHook.itemsAdderItem(itemsadder)
+                if (itemsAdderItem != null) {
+                    itemStack = itemsAdderItem
                     itemStack.meta {
                         // For some reason ItemsAdder puts legacy color coding by default on the item?
                         displayName(displayName.parseLegacy())
@@ -132,8 +130,9 @@ object ItemUtils {
                 }
             } else if (name == "oraxen") {
                 if (isOraxenEnabled) {
-                    if (OraxenItems.exists(value)) {
-                        itemStack = OraxenItems.getItemById(value).build()
+                    val oraxenItem = plugin.hookManager.oraxenHook.oraxenItem(value)
+                    if (oraxenItem != null) {
+                        itemStack = oraxenItem
                     } else {
                         plugin.logger.info("Could not find Oraxen item $value")
                     }
@@ -142,9 +141,9 @@ object ItemUtils {
                 }
             } else if (name == "itemsadder") {
                 if (isItemsAdderEnabled) {
-                    val customStack = CustomStack.getInstance(value)
-                    if (customStack != null) {
-                        itemStack = customStack.itemStack
+                    val itemsAdderItem = plugin.hookManager.itemsAdderHook.itemsAdderItem(value)
+                    if (itemsAdderItem != null) {
+                        itemStack = itemsAdderItem
                         itemStack.meta {
                             // For some reason ItemsAdder puts legacy color coding by default on the item?
                             displayName(displayName.parseLegacy())
