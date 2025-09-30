@@ -4,11 +4,15 @@ EcoMobs:
   enabled: true
 HeadDatabase:
   enabled: true
-Nexo:
+ItemsAdder:
   enabled: true
 MiniPlaceholders:
   enabled: true
 MythicMobs:
+  enabled: true
+Nexo:
+  enabled: true
+Oraxen:
   enabled: true
 PlaceholderAPI:
   enabled: true
