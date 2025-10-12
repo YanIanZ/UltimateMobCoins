@@ -28,7 +28,7 @@ public class UltimateMobCoinsLoader implements PluginLoader {
             add("dev.dejvokep:boosted-yaml:1.3.7");
             add("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13");
             add("com.github.ben-manes.caffeine:caffeine:3.1.8");
-            add("com.zaxxer:HikariCP:6.1.0");
+            add("com.zaxxer:HikariCP:7.0.2");
             add("org.postgresql:postgresql:42.7.5");
 
             add("org.mongodb:mongodb-driver-core:5.4.0");
