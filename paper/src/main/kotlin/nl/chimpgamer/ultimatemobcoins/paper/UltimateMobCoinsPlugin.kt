@@ -35,9 +35,7 @@ import nl.chimpgamer.ultimatemobcoins.paper.utils.LogWriter
 import nl.chimpgamer.ultimatemobcoins.paper.utils.updatechecker.ModrinthUpdateChecker
 import org.bstats.bukkit.Metrics
 import org.bstats.charts.SimplePie
-import org.bukkit.NamespacedKey
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.Event
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.EntitySpawnEvent
@@ -73,12 +71,6 @@ class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
     private val inventoryManager = InventoryManager(this)
 
     val logWriter = LogWriter(this)
-
-    val lootingEnchantment: Enchantment = try {
-        Enchantment.LOOT_BONUS_MOBS
-    } catch (ex: NoSuchFieldError) {
-        Enchantment.getByKey(NamespacedKey.minecraft("looting"))!!
-    }
 
     val modrinthUpdateChecker = ModrinthUpdateChecker(this)
 
@@ -167,7 +159,8 @@ class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
             val shopFiles = listOf(
                 "main_menu.yml",
                 "rotating_shop.yml",
-                "shop.yml"
+                "shop.yml",
+                "shop_with_timer.yml"
             )
             for (shopFile in shopFiles) {
                 val inJarPath = "shops/$shopFile"

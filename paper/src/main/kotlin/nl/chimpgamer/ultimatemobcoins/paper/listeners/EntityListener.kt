@@ -76,7 +76,9 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
         )
         if (!prepareMobCoinDropEvent.callEvent()) return
 
-        val dropAmount = plugin.mobCoinsManager.getCoinDropAmount(killer, mobCoin, dropsMultiplier) ?: return
+        var dropAmount = plugin.mobCoinsManager.getCoinDropAmount(killer, mobCoin, dropsMultiplier) ?: return
+        dropAmount = plugin.mobCoinsManager.checkRecentEarnings(killer, dropAmount)
+
         var mobCoinItem = plugin.mobCoinsManager.createMobCoinItem(dropAmount)
         if (drops.any { it.type === mobCoinItem.type }) return
 
@@ -87,6 +89,7 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
 
         if (prepareMobCoinDropEvent.autoPickup) {
             if (!MobCoinsReceiveEvent(killer, user, dropAmount).callEvent()) return
+
             user.depositCoins(dropAmount)
             user.addCoinsCollected(dropAmount)
             val dropAmountPretty = NumberFormatter.displayCurrency(dropAmount)

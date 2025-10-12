@@ -15,10 +15,45 @@ import nl.chimpgamer.ultimatemobcoins.paper.utils.NamespacedKeys
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.math.BigDecimal
+import java.math.MathContext
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 class MobCoinManager(private val plugin: UltimateMobCoinsPlugin) {
     val config: YamlDocument
     private val mobCoinsList = ArrayList<MobCoin>()
+
+    private val recentEarnings = mutableMapOf<String, MutableList<EarningEntry>>()
+
+    private data class EarningEntry(val amount: BigDecimal, val timestamp: Instant)
+
+    fun checkRecentEarnings(killer: Player, amount: BigDecimal): BigDecimal {
+        var dropAmount = amount
+        if (plugin.settingsConfig.mobCoinsEarningsPenaltyEnabled) {
+            val playerEarnings = recentEarnings.getOrPut(killer.uniqueId.toString()) { mutableListOf() }
+            val unit = ChronoUnit.valueOf(plugin.settingsConfig.mobCoinsEarningsPenaltyCooldownUnit.uppercase())
+            val ago = Instant.now().minus(plugin.settingsConfig.mobCoinsEarningsPenaltyCooldownValue, unit)
+            playerEarnings.removeIf { it.timestamp.isBefore(ago) }
+
+            val recentTotal = playerEarnings.sumOf { it.amount.toDouble() }
+            val earningsPenaltyThreshold = plugin.settingsConfig.mobCoinsEarningsPenaltyThreshold
+            if (recentTotal >= earningsPenaltyThreshold) {
+                val type = plugin.settingsConfig.mobCoinsEarningsPenaltyType
+                val value = plugin.settingsConfig.mobCoinsEarningsPenaltyValue
+                if (value <= 0) return dropAmount
+                if (type.equals("percentage", ignoreCase = true)) {
+                    // C * (V / 100)
+                    dropAmount = dropAmount.multiply(value.toBigDecimal().divide(100.toBigDecimal()))
+                } else if (type.equals("fixed", ignoreCase = true)) {
+                    dropAmount = value.toBigDecimal(MathContext(3))
+                } else return dropAmount
+            }
+
+            playerEarnings.add(EarningEntry(dropAmount, Instant.now()))
+        }
+
+        return dropAmount
+    }
 
     fun loadMobCoins() {
         mobCoinsList.clear()

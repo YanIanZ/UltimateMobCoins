@@ -20,6 +20,9 @@ class HookManager(private val plugin: UltimateMobCoinsPlugin) : Listener {
     private val miniPlaceholdersHook = MiniPlaceholdersHook(plugin)
     val roseStackerHook = RoseStackerHook(plugin)
     val headDatabaseHook = HeadDatabaseHook(plugin)
+    val nexoHook = NexoHook(plugin)
+    val oraxenHook = OraxenHook(plugin)
+    val itemsAdderHook = ItemsAdderHook(plugin)
 
     fun load() {
         checkPlaceholderAPI()
@@ -30,6 +33,9 @@ class HookManager(private val plugin: UltimateMobCoinsPlugin) : Listener {
         miniPlaceholdersHook.load()
         roseStackerHook.load()
         headDatabaseHook.load()
+        nexoHook.load()
+        oraxenHook.load()
+        itemsAdderHook.load()
     }
 
     fun unload() {
@@ -39,6 +45,9 @@ class HookManager(private val plugin: UltimateMobCoinsPlugin) : Listener {
         miniPlaceholdersHook.unload()
         roseStackerHook.unload()
         headDatabaseHook.unload()
+        nexoHook.unload()
+        oraxenHook.unload()
+        itemsAdderHook.unload()
     }
 
     private fun checkPlaceholderAPI() {

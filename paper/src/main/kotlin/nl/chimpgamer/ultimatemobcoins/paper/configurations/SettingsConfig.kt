@@ -46,6 +46,12 @@ class SettingsConfig(private val plugin: UltimateMobCoinsPlugin) {
     val mobCoinsLeaderboardEnabled: Boolean get() = config.getBoolean("mobcoins.leaderboard.enabled", false)
     val mobCoinsLeaderboardShowZero: Boolean get() = config.getBoolean("mobcoins.leaderboard.show-zero", false)
     val mobCoinsAnimationsDrop: ConfigurableAnimation get() = ConfigurableAnimation.deserialize(config.getSection("mobcoins.animations.drop").getStringRouteMappedValues(false))
+    val mobCoinsEarningsPenaltyEnabled: Boolean get() = config.getBoolean("mobcoins.earnings-penalty.enabled", false)
+    val mobCoinsEarningsPenaltyThreshold: Double get() = config.getDouble("mobcoins.earnings-penalty.threshold", 0.0)
+    val mobCoinsEarningsPenaltyCooldownValue: Long get() = config.getLong("mobcoins.earnings-penalty.cooldown.value", 1)
+    val mobCoinsEarningsPenaltyCooldownUnit: String get() = config.getString("mobcoins.earnings-penalty.cooldown.unit", "minutes")
+    val mobCoinsEarningsPenaltyType: String get() = config.getString("mobcoins.earnings-penalty.type", "percentage")
+    val mobCoinsEarningsPenaltyValue: Double get() = config.getDouble("mobcoins.earnings-penalty.value", 0.0)
 
     val logPay: Boolean get() = config.getBoolean("log.pay")
     val logWithdraw: Boolean get() = config.getBoolean("log.withdraw")
@@ -54,6 +60,9 @@ class SettingsConfig(private val plugin: UltimateMobCoinsPlugin) {
     val commandName: String get() = config.getString("command.name")
     val commandAliases: List<String> get() = config.getStringList("command.aliases")
     val commandDefaultShop: String get() = config.getString("command.default_shop")
+
+    val commandWithdrawAmountDoubleType: Boolean get() = config.getBoolean("command.withdraw.amount.double-type", true)
+    val commandWithdrawAmountMax: Double get() = config.getDouble("command.withdraw.amount.max", Double.MAX_VALUE)
 
     val updateNotifyOnJoin: Boolean get() = config.getBoolean("update.notify-on-join", true)
 

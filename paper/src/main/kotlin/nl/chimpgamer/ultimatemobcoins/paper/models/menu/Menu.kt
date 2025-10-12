@@ -66,9 +66,12 @@ abstract class Menu(protected val plugin: UltimateMobCoinsPlugin, protected val 
 
     protected fun getItem(name: String) = menuItems.find { it.name.equals(name, ignoreCase = true) }
 
-    protected fun loadAllItems() {
-        menuItems.clear()
-        menuItems.addAll(getItemsFromConfig())
+    fun loadAllItems() {
+        val itemsFromConfig = getItemsFromConfig()
+        menuItems.apply {
+            clear()
+            addAll(itemsFromConfig)
+        }
     }
 
     protected fun getItemsFromConfig(): Set<MenuItem> {
@@ -103,9 +106,9 @@ abstract class Menu(protected val plugin: UltimateMobCoinsPlugin, protected val 
             message = itemSection.getString("message"),
             permission = itemSection.getString("permission"),
             price = itemSection.getDouble("price", null),
-            priceVault = itemSection.getDouble("price-vault", itemSection.getDouble("price_vault", null),),
+            priceVault = itemSection.getDouble("price-vault", itemSection.getDouble("price_vault", null)),
             stock = itemSection.getInt("stock", null),
-            purchaseLimit = itemSection.getInt("purchase-limit", itemSection.getInt("purchase_limit", null),),
+            purchaseLimit = itemSection.getInt("purchase-limit", itemSection.getInt("purchase_limit", null)),
             chance = itemSection.getInt("chance", 0)
         )
         if (itemSection.contains("actions")) {

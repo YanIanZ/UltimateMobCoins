@@ -4,9 +4,15 @@ EcoMobs:
   enabled: true
 HeadDatabase:
   enabled: true
+ItemsAdder:
+  enabled: true
 MiniPlaceholders:
   enabled: true
 MythicMobs:
+  enabled: true
+Nexo:
+  enabled: true
+Oraxen:
   enabled: true
 PlaceholderAPI:
   enabled: true
@@ -19,4 +25,4 @@ Vault:
 WorldGuard:
   enabled: true
 
-config-version: 3
+config-version: 4

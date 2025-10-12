@@ -1,6 +1,7 @@
 package nl.chimpgamer.ultimatemobcoins.paper.models
 
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import java.math.BigDecimal
 import java.math.MathContext
@@ -26,7 +27,7 @@ class MobCoin(
     fun getAmountToDrop(player: Player): BigDecimal {
         if (amount.isEmpty()) return BigDecimal.ZERO
         if (!willDropCoins()) return BigDecimal.ZERO
-        val lootingEnchantment = plugin.lootingEnchantment
+        val lootingEnchantment = Enchantment.LOOTING
 
         val hand = player.inventory.itemInMainHand
         if (amount[1] == 0.0) {

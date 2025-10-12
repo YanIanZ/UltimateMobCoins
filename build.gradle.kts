@@ -5,14 +5,14 @@ import java.util.*
 val exposedVersion = "0.60.0"
 
 plugins {
-    kotlin("jvm") version "2.2.0"
+    kotlin("jvm") version "2.2.10"
     id("com.gradleup.shadow") version "8.3.5"
     `maven-publish`
 }
 
 allprojects {
     group = "nl.chimpgamer.ultimatemobcoins"
-    version = "1.8.1"
+    version = "2.0.0"
 
     repositories {
         mavenCentral()
@@ -39,7 +39,7 @@ subprojects {
 
         compileOnly("dev.dejvokep:boosted-yaml:1.3.7")
         compileOnly("org.incendo:cloud-core:2.0.0")
-        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.10")
+        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.13")
         compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
 
         compileOnly("org.jetbrains.exposed:exposed-core:$exposedVersion") {
@@ -51,9 +51,9 @@ subprojects {
         compileOnly("org.jetbrains.exposed:exposed-jdbc:$exposedVersion") {
             exclude("org.jetbrains.kotlin")
         }
-        compileOnly("com.zaxxer:HikariCP:6.1.0")
+        compileOnly("com.zaxxer:HikariCP:7.0.2")
         compileOnly("org.xerial:sqlite-jdbc:3.49.1.0")
-        compileOnly("org.mariadb.jdbc:mariadb-java-client:3.5.2")
+        compileOnly("org.mariadb.jdbc:mariadb-java-client:3.5.6")
         compileOnly("com.github.ben-manes.caffeine:caffeine:3.1.8")
         compileOnly("io.github.g00fy2:versioncompare:1.5.0")
     }

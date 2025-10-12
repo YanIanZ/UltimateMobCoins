@@ -67,6 +67,16 @@ mobcoins:
   leaderboard:
     enabled: false
     show-zero: false
+  earnings-penalty:
+    enabled: false
+    threshold: 1000.0
+    per:
+      value: 1
+      unit: minutes
+    # Type options: PERCENTAGE or FIXED
+    type: percentage
+    # Value supports decimals. So 2.25 is 2.25% or 2.25 coins depending on the type set above.
+    value: 0.0
 
 log:
   pay: true
@@ -79,8 +89,12 @@ command:
   aliases:
     - mobcoin
   default_shop: main_menu
+  withdraw:
+    # When disabled, the amount will always be converted to a integer.
+    # Changing this setting requires a server restart.
+    amount-double-type: true
 
 update:
   notify-on-join: true
 
-config-version: 9
+config-version: 10

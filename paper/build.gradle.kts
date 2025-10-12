@@ -25,12 +25,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
-    compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:2.2.3")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.0.1")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.0.1")
 
-    compileOnly("org.incendo:cloud-paper:2.0.0-beta.10")
+    compileOnly("org.incendo:cloud-paper:2.0.0-beta.13")
 
     compileOnly("dev.rosewood:rosestacker:1.5.30")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
@@ -45,7 +45,7 @@ dependencies {
     compileOnly("org.betonquest:betonquest:2.2.1") { isTransitive = false }
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8") // WorldGuard
     compileOnly("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13")
-    compileOnly("com.nexomc:nexo:1.3.0")
+    compileOnly("com.nexomc:nexo:1.10.0")
 
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0") { isTransitive = false }
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0") { isTransitive = false }

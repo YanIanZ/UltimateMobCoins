@@ -41,7 +41,13 @@ class PlayerInteractListener(private val plugin: UltimateMobCoinsPlugin) : Liste
         if (!MobCoinsRedeemEvent(player, user, amount).callEvent()) return
         user.depositCoins(amount)
         player.inventory.setItemInMainHand(null)
-        plugin.messagesConfig.mobCoinsReceivedActionBar.takeIf { it.isNotEmpty() }?.let { player.sendActionBar(it.parse(mapOf("amount" to NumberFormatter.displayCurrency(amount)))) }
+        val amountPretty = NumberFormatter.displayCurrency(amount)
+        plugin.messagesConfig.mobCoinsReceivedChat
+            .takeIf { it.isNotEmpty() }
+            ?.let { player.sendMessage(it.parse(mapOf("amount" to amountPretty))) }
+        plugin.messagesConfig.mobCoinsReceivedActionBar
+            .takeIf { it.isNotEmpty() }
+            ?.let { player.sendActionBar(it.parse(mapOf("amount" to amountPretty))) }
         plugin.settingsConfig.mobCoinsSoundsPickup.play(player)
     }
 }

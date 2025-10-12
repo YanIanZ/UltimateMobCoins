@@ -4,11 +4,12 @@ import com.github.shynixn.mccoroutine.folia.entityDispatcher
 import dev.rosewood.rosestacker.api.RoseStackerAPI
 import dev.rosewood.rosestacker.config.SettingKey
 import dev.rosewood.rosestacker.event.EntityStackMultipleDeathEvent
+import io.papermc.paper.registry.RegistryAccess
+import io.papermc.paper.registry.RegistryKey
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.registerSuspendingEvents
 import nl.chimpgamer.ultimatemobcoins.paper.listeners.RoseStackerListener
 import org.bukkit.NamespacedKey
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.HandlerList
 import org.bukkit.event.entity.EntityDeathEvent
@@ -66,7 +67,8 @@ class RoseStackerHook(plugin: UltimateMobCoinsPlugin) : PluginHook(plugin, "Rose
 
         if (killer == null) return false
 
-        val enchantment = Enchantment.getByKey(NamespacedKey.fromString(SettingKey.ENTITY_MULTIKILL_ENCHANTMENT_TYPE.get())) ?: return false
+        val enchantmentNamespacedKey = NamespacedKey.fromString(SettingKey.ENTITY_MULTIKILL_ENCHANTMENT_TYPE.get()) ?: return false
+        val enchantment = RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT).get(enchantmentNamespacedKey) ?: return false
 
         return killer.inventory.itemInMainHand.getEnchantmentLevel(enchantment) > 0
     }
