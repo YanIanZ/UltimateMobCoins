@@ -1,10 +1,9 @@
 package nl.chimpgamer.ultimatemobcoins.paper.utils
 
 import com.destroystokyo.paper.profile.ProfileProperty
-import com.nexomc.nexo.api.NexoItems
 import dev.dejvokep.boostedyaml.block.implementation.Section
-import dev.lone.itemsadder.api.CustomStack
-import io.th0rgal.oraxen.api.OraxenItems
+import io.papermc.paper.registry.RegistryAccess
+import io.papermc.paper.registry.RegistryKey
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.*
@@ -12,7 +11,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
@@ -25,7 +23,7 @@ import java.util.UUID
 object ItemUtils {
     private val isOraxenEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("Oraxen")
     private val isItemsAdderEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("ItemsAdder")
-    private val isNexoEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("nexo")
+    private val isNexoEnabled: Boolean get() = Bukkit.getPluginManager().isPluginEnabled("Nexo")
 
     private val skullOwnerNamespacedKey = NamespacedKey("ultimatemobcoins", "skull_owner")
 
@@ -41,8 +39,9 @@ object ItemUtils {
         if (itemSection.contains("oraxen")) {
             if (isOraxenEnabled) {
                 val oraxen = itemSection.getString("oraxen")
-                if (OraxenItems.exists(oraxen)) {
-                    itemStack = OraxenItems.getItemById(oraxen).build()
+                val oraxenItem = plugin.hookManager.oraxenHook.oraxenItem(oraxen)
+                if (oraxenItem != null) {
+                    itemStack = oraxenItem
                 } else {
                     plugin.logger.info("Could not find Oraxen item $oraxen")
                 }
@@ -53,9 +52,9 @@ object ItemUtils {
         if (itemSection.contains("itemsadder")) {
             if (isItemsAdderEnabled) {
                 val itemsadder = itemSection.getString("itemsadder")
-                val customStack = CustomStack.getInstance(itemsadder)
-                if (customStack != null) {
-                    itemStack = customStack.itemStack
+                val itemsAdderItem = plugin.hookManager.itemsAdderHook.itemsAdderItem(itemsadder)
+                if (itemsAdderItem != null) {
+                    itemStack = itemsAdderItem
                     itemStack.meta {
                         // For some reason ItemsAdder puts legacy color coding by default on the item?
                         displayName(displayName.parseLegacy())
@@ -70,14 +69,14 @@ object ItemUtils {
         if (itemSection.contains("nexo")) {
             if (isNexoEnabled) {
                 val nexo = itemSection.getString("nexo")
-                val nexoItem = NexoItems.itemFromId(nexo)
+                val nexoItem = plugin.hookManager.nexoHook.nexoItem(nexo)
                 if (nexoItem != null) {
-                    itemStack = nexoItem.build()
+                    itemStack = nexoItem
                 } else {
-                    plugin.logger.info("Could not find nexo item $nexo")
+                    plugin.logger.info("Could not find nexo item $nexo for ${itemSection.nameAsString}. Perhaps the nexo items are not loaded yet?")
                 }
             } else {
-                plugin.logger.info("Could not use nexo. nexo is not installed or enabled!")
+                plugin.logger.info("Could not use nexo. Nexo is not installed or enabled!")
             }
         }
         if (itemSection.contains("name")) {
@@ -131,8 +130,9 @@ object ItemUtils {
                 }
             } else if (name == "oraxen") {
                 if (isOraxenEnabled) {
-                    if (OraxenItems.exists(value)) {
-                        itemStack = OraxenItems.getItemById(value).build()
+                    val oraxenItem = plugin.hookManager.oraxenHook.oraxenItem(value)
+                    if (oraxenItem != null) {
+                        itemStack = oraxenItem
                     } else {
                         plugin.logger.info("Could not find Oraxen item $value")
                     }
@@ -141,9 +141,9 @@ object ItemUtils {
                 }
             } else if (name == "itemsadder") {
                 if (isItemsAdderEnabled) {
-                    val customStack = CustomStack.getInstance(value)
-                    if (customStack != null) {
-                        itemStack = customStack.itemStack
+                    val itemsAdderItem = plugin.hookManager.itemsAdderHook.itemsAdderItem(value)
+                    if (itemsAdderItem != null) {
+                        itemStack = itemsAdderItem
                         itemStack.meta {
                             // For some reason ItemsAdder puts legacy color coding by default on the item?
                             displayName(displayName.parseLegacy())
@@ -153,6 +153,17 @@ object ItemUtils {
                     }
                 } else {
                     plugin.logger.info("Could not use ItemsAdder. ItemsAdder is not installed or enabled!")
+                }
+            } else if (name == "nexo") {
+                if (isNexoEnabled) {
+                    val nexoItem = plugin.hookManager.nexoHook.nexoItem(value)
+                    if (nexoItem != null) {
+                        itemStack = nexoItem
+                    } else {
+                        plugin.logger.info("Could not find nexo item $value. Perhaps the nexo items are not loaded yet?")
+                    }
+                } else {
+                    plugin.logger.info("Could not use nexo. nexo is not installed or enabled!")
                 }
             } else if (name == "amount") {
                 val amount = value.toIntOrNull()
@@ -192,7 +203,8 @@ object ItemUtils {
                 val level = enchantmentParts[1].trim().toIntOrNull() ?: -1
 
                 val enchantment =
-                    runCatching { Enchantment.getByKey(NamespacedKey.minecraft(enchantmentName)) }.getOrNull()
+                    runCatching { RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT)
+                        .get(NamespacedKey.minecraft(enchantmentName)) }.getOrNull()
                 if (enchantment != null) {
                     itemStack = itemStack.enchantment(enchantment, level)
                 }
