@@ -39,7 +39,7 @@ subprojects {
 
         compileOnly("dev.dejvokep:boosted-yaml:1.3.7")
         compileOnly("org.incendo:cloud-core:2.0.0")
-        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.13")
+        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.14")
         compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
 
         compileOnly("org.jetbrains.exposed:exposed-core:$exposedVersion") {
