@@ -54,7 +54,7 @@ dependencies {
     compileOnly("org.mongodb:mongodb-driver-kotlin-coroutine") {
         exclude("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
     }
-    compileOnly("org.mongodb:bson-kotlinx:5.4.0")
+    compileOnly("org.mongodb:bson-kotlinx")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
 }
