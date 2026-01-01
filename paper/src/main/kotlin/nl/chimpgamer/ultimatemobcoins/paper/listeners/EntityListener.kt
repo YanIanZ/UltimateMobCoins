@@ -113,11 +113,14 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
         itemStack.itemMeta.pdc {
             if (!has(NamespacedKeys.isMobCoin) || !getBoolean(NamespacedKeys.isMobCoin)) return
         }
+        val mobCoinsAnimationDrop = plugin.settingsConfig.mobCoinsAnimationsDrop
+        if (mobCoinsAnimationDrop.enabled) {
+            plugin.launch(plugin.entityDispatcher(entity)) {
+                delay(13.ticks)
+                mobCoinsAnimationDrop.play(entity)
+            }
+        }
         if (plugin.settingsConfig.mobCoinsAllowHopperPickup) return
         entity.setMetadata("NO_PICKUP", FixedMetadataValue(plugin, true)) // UpgradableHoppers support
-        plugin.launch(plugin.entityDispatcher(entity)) {
-            delay(13.ticks)
-            plugin.settingsConfig.mobCoinsAnimationsDrop.play(entity)
-        }
     }
 }

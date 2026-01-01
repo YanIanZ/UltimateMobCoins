@@ -15,7 +15,7 @@ enum class AnimationType {
 }
 
 class ConfigurableAnimation(
-    private val enabled: Boolean,
+    val enabled: Boolean,
     private val type: AnimationType,
     private val particle: String,
     private val duration: Int
