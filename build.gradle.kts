@@ -5,14 +5,14 @@ import java.util.*
 val exposedVersion = "0.60.0"
 
 plugins {
-    kotlin("jvm") version "2.2.10"
-    id("com.gradleup.shadow") version "8.3.5"
+    kotlin("jvm") version "2.2.21"
+    id("com.gradleup.shadow") version "9.3.0"
     `maven-publish`
 }
 
 allprojects {
     group = "nl.chimpgamer.ultimatemobcoins"
-    version = "2.0.0"
+    version = "2.0.1"
 
     repositories {
         mavenCentral()
@@ -39,7 +39,7 @@ subprojects {
 
         compileOnly("dev.dejvokep:boosted-yaml:1.3.7")
         compileOnly("org.incendo:cloud-core:2.0.0")
-        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.13")
+        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.14")
         compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
 
         compileOnly("org.jetbrains.exposed:exposed-core:$exposedVersion") {

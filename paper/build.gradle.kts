@@ -5,7 +5,7 @@ repositories {
 
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 
-    maven("https://nexus.betonquest.org/repository/betonquest/") // BetonQuest Repository
+    maven("https://repo.betonquest.org/betonquest/") // BetonQuest Repository
 
     maven("https://nexus.hc.to/content/repositories/pub_releases") // Vault Repository
 
@@ -27,10 +27,10 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.0.1")
-    compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.0.1")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.1.0")
 
-    compileOnly("org.incendo:cloud-paper:2.0.0-beta.13")
+    compileOnly("org.incendo:cloud-paper:2.0.0-beta.14")
 
     compileOnly("dev.rosewood:rosestacker:1.5.30")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
@@ -54,7 +54,7 @@ dependencies {
     compileOnly("org.mongodb:mongodb-driver-kotlin-coroutine") {
         exclude("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
     }
-    compileOnly("org.mongodb:bson-kotlinx:5.4.0")
+    compileOnly("org.mongodb:bson-kotlinx")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
 }
