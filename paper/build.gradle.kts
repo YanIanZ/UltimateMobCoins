@@ -5,7 +5,7 @@ repositories {
 
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 
-    maven("https://nexus.betonquest.org/repository/betonquest/") // BetonQuest Repository
+    maven("https://repo.betonquest.org/betonquest/") // BetonQuest Repository
 
     maven("https://nexus.hc.to/content/repositories/pub_releases") // Vault Repository
 
