@@ -11,9 +11,9 @@ import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
 class SpinnerConfig(plugin: UltimateMobCoinsPlugin) {
     private val config: YamlDocument
 
-    val shootFireworks: Boolean get() = config.getBoolean("shoot_fireworks")
-    val usageCosts: Double get() = config.getDouble("usage_costs")
-    val menuTitle: String get() = config.getString("menu_title")
+    val shootFireworks: Boolean get() = config.getBoolean("shoot-fireworks", config.getBoolean("shoot_fireworks"))
+    val usageCosts: Double get() = config.getDouble("usage-costs", config.getDouble("usage_costs"))
+    val menuTitle: String get() = config.getString("title", config.getString("menu_title"))
 
     init {
         val fileName = "spinner.yml"

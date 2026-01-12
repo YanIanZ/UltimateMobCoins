@@ -25,7 +25,10 @@ mobcoins:
   disabled_worlds:
     - disabled_world
   starting_balance: 0.0
-  auto-pickup: false
+  drops:
+    auto-redeem-on-pickup: true
+    auto-pickup: false
+    allow-hopper-pickup: false
   format: '###,##0.00'
   format-locale: 'en-US'
   item:
@@ -39,7 +42,9 @@ mobcoins:
       - <reset>
       - <gray>Right click to redeem!
     glow: false
-    model_data: null
+    model-data: null
+    # Players can redeem their coins by clicking on the item.
+    self-redeemable: true
   sounds:
     drop:
       enabled: true
@@ -58,7 +63,6 @@ mobcoins:
       particle: SPELL_WITCH
       duration: 10
   looting-enchant-multiplier: true
-  allow-hopper-pickup: false
   loss-on-death:
     # Type options: PERCENTAGE or FIXED
     type: percentage
@@ -90,11 +94,11 @@ command:
     - mobcoin
   default_shop: main_menu
   withdraw:
-    # When disabled, the amount will always be converted to a integer.
+    # When disabled, the amount will always be converted to an integer.
     # Changing this setting requires a server restart.
     amount-double-type: true
 
 update:
   notify-on-join: true
 
-config-version: 10
+config-version: 11

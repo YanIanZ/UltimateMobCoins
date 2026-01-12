@@ -1,6 +1,7 @@
 package nl.chimpgamer.ultimatemobcoins.paper.commands
 
 import com.github.shynixn.mccoroutine.folia.asyncDispatcher
+import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.feature.pagination.Pagination
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
@@ -19,6 +20,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.incendo.cloud.CommandManager
+import org.incendo.cloud.bukkit.parser.PlayerParser.playerParser
 import org.incendo.cloud.component.CommandComponent
 import org.incendo.cloud.component.DefaultValue
 import org.incendo.cloud.key.CloudKey
@@ -575,6 +577,23 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
                 sender.sendMessage(plugin.messagesConfig.mobCoinsGiveSender.parse(replacements))
                 if (!isSilent)
                     targetPlayer.player?.sendMessage(plugin.messagesConfig.mobCoinsGiveTarget.parse(replacements))
+            }
+        )
+
+        commandManager.command(builder
+            .literal("redeem")
+            .optional(playerKey, playerParser())
+            .permission("$basePermission.redeem")
+            .suspendingHandler(context = plugin.globalRegionDispatcher) { context ->
+                val sender = context.sender()
+                val player = context[playerKey]
+                val playerInventory = player.inventory
+                playerInventory.contents
+                    .filterNotNull()
+                    .forEach { itemStack ->
+                        plugin.mobCoinsManager.redeemMobCoinItem(player, itemStack)
+                    }
+                sender.sendRichMessage("<green>Redeemed all mob coin items from ${player.name}'s inventory!")
             }
         )
     }

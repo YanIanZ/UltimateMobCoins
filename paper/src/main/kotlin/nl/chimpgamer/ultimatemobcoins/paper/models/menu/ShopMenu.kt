@@ -55,6 +55,8 @@ class ShopMenu(plugin: UltimateMobCoinsPlugin, config: MenuConfig) : Refreshable
     override fun refresh() {
         refreshShopItems()
         resetTimeRemaining()
+        plugin.logger.info("[${file.name}] Refreshed shop menu")
+        plugin.logWriter.writeAsync("[${file.name}] Refreshed shop menu")
     }
 
     override fun refreshShopItems() {

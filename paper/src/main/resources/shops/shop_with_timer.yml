@@ -1,9 +1,9 @@
 title: MobCoin Shop with Timer
 type: SHOP
 size: 36
-close_on_click: false
-update_interval: 20
-refresh_time: 86400
+close-on-click: false
+update-interval: 20
+refresh-time: 86400
 sounds:
   opening:
     enabled: true

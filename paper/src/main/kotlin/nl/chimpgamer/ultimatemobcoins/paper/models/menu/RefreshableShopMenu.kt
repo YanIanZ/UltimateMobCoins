@@ -33,7 +33,7 @@ abstract class RefreshableShopMenu(plugin: UltimateMobCoinsPlugin, config: MenuC
     }
 
     fun resetTimeRemaining() {
-        val refreshTime = config.getLong("refresh_time")
+        val refreshTime = config.getLong("refresh-time", config.getLong("refresh_time"))
         if (refreshTime == null || refreshTime <= 0) return
         this.refreshTime = Instant.now().plusSeconds(refreshTime)
     }

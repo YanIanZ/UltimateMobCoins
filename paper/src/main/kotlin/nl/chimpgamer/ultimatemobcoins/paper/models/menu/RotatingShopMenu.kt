@@ -55,11 +55,13 @@ class RotatingShopMenu(plugin: UltimateMobCoinsPlugin, config: MenuConfig) : Ref
     override fun refresh() {
         refreshShopItems()
         resetTimeRemaining()
+        plugin.logger.info("[${file.name}] Refreshed shop menu")
+        plugin.logWriter.writeAsync("[${file.name}] Refreshed shop menu")
     }
 
     override fun refreshShopItems() {
         currentShopItems.clear()
-        val shopSlots = config.getIntList("shop_slots")
+        val shopSlots = config.getIntList("shop-slots", config.getIntList("shop_slots"))
         plugin.debug { "[${file.name}] shopSlots=$shopSlots" }
         val shopItems = this.allRotatingShopItems.filter { it.success }.map { it.clone() }.toMutableList()
         for (slot in shopSlots) {

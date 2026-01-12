@@ -91,8 +91,8 @@ object ItemUtils {
             val glow = itemSection.getBoolean("glow")
             itemStack.glow(glow)
         }
-        if (itemSection.contains("model_data")) {
-            val modelData = itemSection.getInt("model_data", null)
+        if (itemSection.contains("model_data") || itemSection.contains("model-data")) {
+            val modelData = itemSection.getInt("model_data", itemSection.getInt("model-data", null))
             if (modelData != null) {
                 itemStack.customModelData(modelData)
             }

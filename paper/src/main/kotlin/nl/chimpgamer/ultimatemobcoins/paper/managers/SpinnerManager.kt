@@ -37,7 +37,7 @@ class SpinnerManager(private val plugin: UltimateMobCoinsPlugin) {
                 ?.getStringRouteMappedValues(false)
                 ?.let(ConfigurableSound::deserialize)
 
-            prizeWonSound = soundsSection.getSection("prize_won")
+            prizeWonSound = soundsSection.getSection("prize-won", soundsSection.getSection("prize_won"))
                 ?.getStringRouteMappedValues(false)
                 ?.let(ConfigurableSound::deserialize)
         }

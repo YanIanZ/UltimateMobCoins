@@ -33,14 +33,16 @@ class SettingsConfig(private val plugin: UltimateMobCoinsPlugin) {
 
     val mobCoinsDisabledWorlds: List<String> get() = config.getStringList("mobcoins.disabled_worlds")
     val mobCoinsStartingBalance: Double get() = config.getDouble("mobcoins.starting_balance")
-    val mobCoinsAutoPickup: Boolean get() = config.getBoolean("mobcoins.auto-pickup", false)
+    val mobCoinsDropsAutoRedeemOnPickup: Boolean get() = config.getBoolean("mobcoins.drops.auto-redeem-on-pickup", true)
+    val mobCoinsDropsAutoPickup: Boolean get() = config.getBoolean("mobcoins.drops.auto-pickup", false)
+    val mobCoinsDropsAllowHopperPickup: Boolean get() = config.getBoolean("mobcoins.drops.allow-hopper-pickup", false)
     val mobCoinsFormat: String get() = config.getString("mobcoins.format")
     val mobCoinsFormatLocale: String get() = config.getString("mobcoins.format-locale")
     fun getMobCoinsItem(tagResolver: TagResolver) = ItemUtils.itemSectionToItemStack(plugin, config.getSection("mobcoins.item"), tagResolver)
+    val mobCoinsItemSelfRedeemable: Boolean get() = config.getBoolean("mobcoins.item.self-redeemable", true)
     val mobCoinsSoundsDrop: ConfigurableSound get() = ConfigurableSound.deserialize(config.getSection("mobcoins.sounds.drop").getStringRouteMappedValues(false))
     val mobCoinsSoundsPickup: ConfigurableSound get() = ConfigurableSound.deserialize(config.getSection("mobcoins.sounds.pickup").getStringRouteMappedValues(false))
     val mobCoinsLootingEnchantMultiplier: Boolean get() = config.getBoolean("mobcoins.looting-enchant-multiplier", true)
-    val mobCoinsAllowHopperPickup: Boolean get() = config.getBoolean("mobcoins.allow-hopper-pickup", false)
     val mobCoinsLossOnDeathType: String get() = config.getString("mobcoins.loss-on-death.type")
     val mobCoinsLossOnDeathValue: Double get() = config.getDouble("mobcoins.loss-on-death.value")
     val mobCoinsLeaderboardEnabled: Boolean get() = config.getBoolean("mobcoins.leaderboard.enabled", false)
@@ -85,5 +87,16 @@ class SettingsConfig(private val plugin: UltimateMobCoinsPlugin) {
         }
 
         NumberFormatter.setPrettyFormat(mobCoinsFormat, mobCoinsFormatLocale)
+
+        if (config.contains("mobcoins.auto-pickup")) {
+            val mobCoinsAutoPickup = config.getBoolean("mobcoins.auto-pickup")
+            config.set("mobcoins.drops.auto-pickup", mobCoinsAutoPickup)
+            config.set("mobcoins.auto-pickup", null)
+        }
+        if (config.contains("mobcoins.allow-hopper-pickup")) {
+            val mobCoinsAllowHopperPickup = config.getBoolean("mobcoins.allow-hopper-pickup")
+            config.set("mobcoins.drops.allow-hopper-pickup", mobCoinsAllowHopperPickup)
+            config.set("mobcoins.allow-hopper-pickup", null)
+        }
     }
 }
