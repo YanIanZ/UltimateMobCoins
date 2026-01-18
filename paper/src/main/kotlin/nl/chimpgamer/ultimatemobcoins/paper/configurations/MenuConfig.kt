@@ -29,7 +29,8 @@ class MenuConfig(plugin: UltimateMobCoinsPlugin, val file: File) {
 
     fun getString(route: String, def: String?): String? = config.getString(route, def)
 
-    fun getBoolean(route: String, def: Boolean? = null): Boolean = config.getBoolean(route, def)
+    fun getBoolean(route: String): Boolean = config.getBoolean(route)
+    fun getBoolean(route: String, def: Boolean): Boolean = config.getBoolean(route, def)
 
     fun getInt(route: String, def: Int): Int = config.getInt(route, def)
 
