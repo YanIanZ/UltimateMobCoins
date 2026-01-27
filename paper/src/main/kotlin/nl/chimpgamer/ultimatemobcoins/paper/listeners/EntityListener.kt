@@ -109,10 +109,8 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun ItemSpawnEvent.onItemSpawn() {
         val itemStack = entity.itemStack
-        if (!itemStack.hasItemMeta()) return
-        itemStack.itemMeta.pdc {
-            if (!has(NamespacedKeys.isMobCoin) || !getBoolean(NamespacedKeys.isMobCoin)) return
-        }
+        val isMobCoinItem = plugin.mobCoinsManager.isMobCoinItem(itemStack)
+        if (!isMobCoinItem) return
         val mobCoinsAnimationDrop = plugin.settingsConfig.mobCoinsAnimationsDrop
         if (mobCoinsAnimationDrop.enabled) {
             plugin.launch(plugin.entityDispatcher(entity)) {

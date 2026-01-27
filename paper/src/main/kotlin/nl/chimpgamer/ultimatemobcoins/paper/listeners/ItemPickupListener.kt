@@ -29,10 +29,8 @@ class ItemPickupListener(private val plugin: UltimateMobCoinsPlugin) : Listener 
         if (inventory.type !== InventoryType.HOPPER) return
         if (plugin.settingsConfig.mobCoinsDropsAllowHopperPickup) return
         val itemStack = item.itemStack
-        if (!itemStack.hasItemMeta()) return
-        itemStack.itemMeta.pdc {
-            if (!has(NamespacedKeys.isMobCoin) || !getBoolean(NamespacedKeys.isMobCoin)) return
-        }
+        val isMobCoinItem = plugin.mobCoinsManager.isMobCoinItem(itemStack)
+        if (!isMobCoinItem) return
         isCancelled = true
     }
 }
