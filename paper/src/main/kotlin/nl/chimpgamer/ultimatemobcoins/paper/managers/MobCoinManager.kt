@@ -89,7 +89,7 @@ class MobCoinManager(private val plugin: UltimateMobCoinsPlugin) {
     }
 
     fun createMobCoinItem(dropAmount: BigDecimal): ItemStack {
-        val mobCoinItem = plugin.settingsConfig.getMobCoinsItem(Placeholder.unparsed("amount", dropAmount.toString())) // EpicHoppers ignores the item if the name starts with *** (https://github.com/craftaro/EpicHoppers/blob/master/EpicHoppers-Plugin/src/main/java/com/craftaro/epichoppers/hopper/levels/modules/ModuleSuction.java#L97)
+        val mobCoinItem = plugin.settingsConfig.getMobCoinsItem(Placeholder.unparsed("amount", NumberFormatter.displayCurrency(dropAmount))) // EpicHoppers ignores the item if the name starts with *** (https://github.com/craftaro/EpicHoppers/blob/master/EpicHoppers-Plugin/src/main/java/com/craftaro/epichoppers/hopper/levels/modules/ModuleSuction.java#L97)
 
         mobCoinItem.editMeta { meta ->
             meta.pdc {
