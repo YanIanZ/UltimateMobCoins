@@ -1,9 +1,6 @@
 package nl.chimpgamer.ultimatemobcoins.paper.listeners
 
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
-import nl.chimpgamer.ultimatemobcoins.paper.extensions.getBoolean
-import nl.chimpgamer.ultimatemobcoins.paper.extensions.pdc
-import nl.chimpgamer.ultimatemobcoins.paper.utils.NamespacedKeys
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -15,7 +12,38 @@ class ItemPickupListener(private val plugin: UltimateMobCoinsPlugin) : Listener 
 
     @EventHandler(ignoreCancelled = true)
     suspend fun PlayerAttemptPickupItemEvent.onPlayerAttemptPickupItem() {
-        if (!plugin.settingsConfig.mobCoinsDropsAutoRedeemOnPickup) return
+        if (!plugin.settingsConfig.mobCoinsDropsAutoRedeemOnPickup) {
+            val itemStack = item.itemStack
+            val isMobCoinItem = plugin.mobCoinsManager.isMobCoinItem(itemStack)
+            if (!isMobCoinItem) return
+
+            val playerInventory = player.inventory
+            val mobCoinItemsInInventory = playerInventory.storageContents
+                .withIndex()
+                .filter { it.value != null }
+                .filter { plugin.mobCoinsManager.isMobCoinItem(it.value!!) }
+
+            if (mobCoinItemsInInventory.isEmpty()) return
+
+            var cancel = false
+
+            val valueToAdd = plugin.mobCoinsManager.getMobCoinValue(itemStack) ?: return
+
+            for ((pos, mobCoinItem) in mobCoinItemsInInventory) {
+                val mobCoinValue = plugin.mobCoinsManager.getMobCoinValue(mobCoinItem!!) ?: continue
+                if (mobCoinValue >= 1000.toBigDecimal()) continue
+                if (mobCoinValue + valueToAdd >= 1000.toBigDecimal()) continue // Does it fit in another existing coin?
+                cancel = true
+
+                playerInventory.setItem(pos, plugin.mobCoinsManager.createMobCoinItem(mobCoinValue + valueToAdd))
+                break
+            }
+            if (cancel) {
+                isCancelled = true
+                item.remove()
+            }
+            return
+        }
         val itemStack = item.itemStack
         val isMobCoinItem = plugin.mobCoinsManager.isMobCoinItem(itemStack)
         if (!isMobCoinItem) return
