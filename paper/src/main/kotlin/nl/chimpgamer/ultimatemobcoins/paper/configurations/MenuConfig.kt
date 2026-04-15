@@ -30,12 +30,13 @@ class MenuConfig(plugin: UltimateMobCoinsPlugin, val file: File) {
     fun getString(route: String, def: String?): String? = config.getString(route, def)
 
     fun getBoolean(route: String): Boolean = config.getBoolean(route)
+    fun getBoolean(route: String, def: Boolean): Boolean = config.getBoolean(route, def)
 
     fun getInt(route: String, def: Int): Int = config.getInt(route, def)
 
-    fun getLong(route: String): Long? = config.getLong(route)
+    fun getLong(route: String, def: Long? = null): Long? = config.getLong(route, def)
 
-    fun getIntList(route: String): List<Int> = config.getIntList(route)
+    fun getIntList(route: String, def: List<Int> = emptyList()): List<Int> = config.getIntList(route, def)
 
     fun <T : Enum<T>> getEnum(route: String, clazz: KClass<T>, def: T): T = config.getEnum(route, clazz.java, def)
 

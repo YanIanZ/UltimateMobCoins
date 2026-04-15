@@ -64,7 +64,7 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
         val mobCoin = plugin.mobCoinsManager.getMobCoin(entityTypeName) ?: return
         mobCoin.applyDropChanceMultiplier(killer)
         val dropsMultiplier = plugin.getMobCoinDropsMultiplier(killer)
-        val autoPickup = plugin.settingsConfig.mobCoinsAutoPickup && killer.hasPermission("ultimatemobcoins.autopickup")
+        val autoPickup = plugin.settingsConfig.mobCoinsDropsAutoPickup && killer.hasPermission("ultimatemobcoins.autopickup")
 
         val prepareMobCoinDropEvent = PrepareMobCoinDropEvent(
             killer,
@@ -109,10 +109,8 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun ItemSpawnEvent.onItemSpawn() {
         val itemStack = entity.itemStack
-        if (!itemStack.hasItemMeta()) return
-        itemStack.itemMeta.pdc {
-            if (!has(NamespacedKeys.isMobCoin) || !getBoolean(NamespacedKeys.isMobCoin)) return
-        }
+        val isMobCoinItem = plugin.mobCoinsManager.isMobCoinItem(itemStack)
+        if (!isMobCoinItem) return
         val mobCoinsAnimationDrop = plugin.settingsConfig.mobCoinsAnimationsDrop
         if (mobCoinsAnimationDrop.enabled) {
             plugin.launch(plugin.entityDispatcher(entity)) {
@@ -120,7 +118,7 @@ class EntityListener(private val plugin: UltimateMobCoinsPlugin) : Listener {
                 mobCoinsAnimationDrop.play(entity)
             }
         }
-        if (plugin.settingsConfig.mobCoinsAllowHopperPickup) return
+        if (plugin.settingsConfig.mobCoinsDropsAllowHopperPickup) return
         entity.setMetadata("NO_PICKUP", FixedMetadataValue(plugin, true)) // UpgradableHoppers support
     }
 }

@@ -7,11 +7,16 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
+import nl.chimpgamer.ultimatemobcoins.paper.events.MobCoinsRedeemEvent
+import nl.chimpgamer.ultimatemobcoins.paper.extensions.getBoolean
+import nl.chimpgamer.ultimatemobcoins.paper.extensions.getDouble
+import nl.chimpgamer.ultimatemobcoins.paper.extensions.parse
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.pdc
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.setBoolean
 import nl.chimpgamer.ultimatemobcoins.paper.extensions.setDouble
 import nl.chimpgamer.ultimatemobcoins.paper.models.MobCoin
 import nl.chimpgamer.ultimatemobcoins.paper.utils.NamespacedKeys
+import nl.chimpgamer.ultimatemobcoins.paper.utils.NumberFormatter
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.math.BigDecimal
@@ -57,9 +62,9 @@ class MobCoinManager(private val plugin: UltimateMobCoinsPlugin) {
 
     fun loadMobCoins() {
         mobCoinsList.clear()
-        val mobCoinDrops = config.getSection("mobCoinDrops") ?: return
+        val mobCoinDrops = config.getSection("mobcoin-drops", config.getSection("mobCoinDrops")) ?: return
         mobCoinDrops.keys.mapNotNull { it.toString() }.forEach { key ->
-            val entityType = key.uppercase()
+            val entityType = key.uppercase().replace("-", "_")
             val chance = mobCoinDrops.getDouble("$key.chance")
             val amountStr = mobCoinDrops.getString("$key.amount")
 
@@ -84,7 +89,7 @@ class MobCoinManager(private val plugin: UltimateMobCoinsPlugin) {
     }
 
     fun createMobCoinItem(dropAmount: BigDecimal): ItemStack {
-        val mobCoinItem = plugin.settingsConfig.getMobCoinsItem(Placeholder.unparsed("amount", dropAmount.toString())) // EpicHoppers ignores the item if the name starts with *** (https://github.com/craftaro/EpicHoppers/blob/master/EpicHoppers-Plugin/src/main/java/com/craftaro/epichoppers/hopper/levels/modules/ModuleSuction.java#L97)
+        val mobCoinItem = plugin.settingsConfig.getMobCoinsItem(Placeholder.unparsed("amount", NumberFormatter.displayCurrency(dropAmount))) // EpicHoppers ignores the item if the name starts with *** (https://github.com/craftaro/EpicHoppers/blob/master/EpicHoppers-Plugin/src/main/java/com/craftaro/epichoppers/hopper/levels/modules/ModuleSuction.java#L97)
 
         mobCoinItem.editMeta { meta ->
             meta.pdc {
@@ -94,6 +99,41 @@ class MobCoinManager(private val plugin: UltimateMobCoinsPlugin) {
         }
 
         return mobCoinItem
+    }
+
+    fun isMobCoinItem(itemStack: ItemStack) = itemStack.hasItemMeta() && itemStack.itemMeta.pdc.has(NamespacedKeys.isMobCoin) && itemStack.itemMeta.pdc.getBoolean(NamespacedKeys.isMobCoin)
+
+    fun getMobCoinValue(itemStack: ItemStack): BigDecimal? {
+        var amount = BigDecimal.ZERO
+        val mobCoinsAmount = itemStack.itemMeta.pdc.getDouble(NamespacedKeys.mobCoinAmount)
+        if (mobCoinsAmount != null) amount = mobCoinsAmount.toBigDecimal()
+        return amount.multiply(itemStack.amount.toBigDecimal())
+    }
+
+    suspend fun redeemMobCoinItem(player: Player, itemStack: ItemStack) {
+        var amount = BigDecimal.ZERO
+        itemStack.itemMeta.pdc {
+            amount = getDouble(NamespacedKeys.mobCoinAmount)?.toBigDecimal() ?: return
+        }
+
+        amount = amount.multiply(itemStack.amount.toBigDecimal())
+
+        val user = plugin.userManager.getIfLoaded(player)
+        if (user == null) {
+            plugin.logger.warning("Something went wrong! Could not get user ${player.name} (${player.uniqueId})")
+            return
+        }
+        if (!MobCoinsRedeemEvent(player, user, amount).callEvent()) return
+        user.depositCoins(amount)
+        player.inventory.removeItemAnySlot(itemStack)
+        val amountPretty = NumberFormatter.displayCurrency(amount)
+        plugin.messagesConfig.mobCoinsReceivedChat
+            .takeIf { it.isNotEmpty() }
+            ?.let { player.sendMessage(it.parse(mapOf("amount" to amountPretty))) }
+        plugin.messagesConfig.mobCoinsReceivedActionBar
+            .takeIf { it.isNotEmpty() }
+            ?.let { player.sendActionBar(it.parse(mapOf("amount" to amountPretty))) }
+        plugin.settingsConfig.mobCoinsSoundsPickup.play(player)
     }
 
     fun reload() {

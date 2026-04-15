@@ -141,6 +141,7 @@ class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
 
         registerEvents(
             FireworkListener(),
+            PlayerInventoryListener(this),
             hookManager
         )
         registerSuspendingEvents(

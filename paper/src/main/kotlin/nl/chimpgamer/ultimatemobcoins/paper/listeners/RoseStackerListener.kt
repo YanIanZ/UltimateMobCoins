@@ -47,7 +47,7 @@ class RoseStackerListener(private val plugin: UltimateMobCoinsPlugin) : Listener
         val entityTypeName = plugin.hookManager.getEntityName(entity)
         val mobCoin = plugin.mobCoinsManager.getMobCoin(entityTypeName) ?: return
         mobCoin.applyDropChanceMultiplier(killer)
-        val autoPickup = plugin.settingsConfig.mobCoinsAutoPickup && killer.hasPermission("ultimatemobcoins.autopickup")
+        val autoPickup = plugin.settingsConfig.mobCoinsDropsAutoPickup && killer.hasPermission("ultimatemobcoins.autopickup")
         val dropsMultiplier = plugin.getMobCoinDropsMultiplier(killer)
 
         val prepareMobCoinDropEvent = PrepareMobCoinDropEvent(

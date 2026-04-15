@@ -1,10 +1,10 @@
 title: Rotating MobCoin Shop
 type: ROTATING_SHOP
 size: 36
-close_on_click: false
-update_interval: 20
-shop_slots: [12, 13, 14, 15, 16, 21, 22, 23, 24, 25]
-refresh_time: 86400
+close-on-click: false
+update-interval: 20
+shop-slots: [12, 13, 14, 15, 16, 21, 22, 23, 24, 25]
+refresh-time: 86400
 sounds:
   opening:
     enabled: true

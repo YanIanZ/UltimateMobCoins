@@ -297,9 +297,9 @@ abstract class Menu(protected val plugin: UltimateMobCoinsPlugin, protected val 
     init {
         title = config.getString("title", "MobCoin Shop")
         permission = config.getString("permission")
-        closeOnClick = config.getBoolean("close_on_click")
+        closeOnClick = config.getBoolean("close-on-click", config.getBoolean("close_on_click"))
 
-        updateInterval = config.getInt("update_interval", DEFAULT_UPDATE_INTERVAL)
+        updateInterval = config.getInt("update-interval", config.getInt("update_interval", DEFAULT_UPDATE_INTERVAL))
         if (updateInterval > 0) updateInterval * 50
 
         inventorySize = config.getInt("size", DEFAULT_INVENTORY_SIZE)

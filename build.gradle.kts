@@ -12,7 +12,7 @@ plugins {
 
 allprojects {
     group = "nl.chimpgamer.ultimatemobcoins"
-    version = "2.0.1"
+    version = "2.0.2"
 
     repositories {
         mavenCentral()
@@ -27,9 +27,7 @@ subprojects {
     }
 
     repositories {
-        maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-            name = "sonatype-oss-snapshots"
-        }
+        mavenLocal()
     }
 
     dependencies {

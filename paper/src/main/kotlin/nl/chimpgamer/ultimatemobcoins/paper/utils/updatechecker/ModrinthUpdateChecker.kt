@@ -39,7 +39,7 @@ class ModrinthUpdateChecker(private val plugin: UltimateMobCoinsPlugin) {
     }
 
     fun notifyAboutUpdate() {
-        val latestRelease = updates.first { it.versionType == RELEASE_VERSION_TYPE }
+        val latestRelease = updates.firstOrNull { it.versionType == RELEASE_VERSION_TYPE } ?: return
         val latestVersion = Version(latestRelease.versionNumber)
         val pluginVersion = Version(plugin.version)
         if (pluginVersion >= latestVersion) return
@@ -49,7 +49,7 @@ class ModrinthUpdateChecker(private val plugin: UltimateMobCoinsPlugin) {
     fun notifyPlayerAboutUpdate(player: Player) {
         if (!plugin.settingsConfig.updateNotifyOnJoin) return
         if (!player.hasPermission("ultimatemobcoins.update-check")) return
-        val latestRelease = updates.first { it.versionType == RELEASE_VERSION_TYPE }
+        val latestRelease = updates.firstOrNull { it.versionType == RELEASE_VERSION_TYPE } ?: return
         val latestVersion = Version(latestRelease.versionNumber)
         val pluginVersion = Version(plugin.version)
         if (pluginVersion >= latestVersion) return

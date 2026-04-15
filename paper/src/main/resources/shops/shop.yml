@@ -1,8 +1,8 @@
 title: MobCoin Shop
 type: SHOP
 size: 36
-close_on_click: false
-update_interval: 0 # Prevents the inventory from unnecessary updating
+close-on-click: false
+update-interval: 0 # Prevents the inventory from unnecessary updating
 sounds:
   opening:
     enabled: true
