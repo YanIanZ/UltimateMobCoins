@@ -50,7 +50,7 @@ dependencies {
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0") { isTransitive = false }
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0") { isTransitive = false }
 
-    compileOnly(platform("org.mongodb:mongodb-driver-bom:5.4.0"))
+    compileOnly(platform("org.mongodb:mongodb-driver-bom:5.7.0"))
     compileOnly("org.mongodb:mongodb-driver-kotlin-coroutine") {
         exclude("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
     }

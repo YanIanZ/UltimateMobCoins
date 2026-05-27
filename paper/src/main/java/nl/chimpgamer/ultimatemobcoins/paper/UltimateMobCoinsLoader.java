@@ -31,10 +31,10 @@ public class UltimateMobCoinsLoader implements PluginLoader {
             add("com.zaxxer:HikariCP:7.0.2");
             add("org.postgresql:postgresql:42.7.5");
 
-            add("org.mongodb:mongodb-driver-core:5.4.0");
-            add("org.mongodb:mongodb-driver-kotlin-coroutine:5.4.0");
-            add("org.mongodb:bson-kotlinx:5.4.0");
-            add("org.mongodb:mongodb-driver-reactivestreams:5.4.0");
+            add("org.mongodb:mongodb-driver-core:5.7.0");
+            add("org.mongodb:mongodb-driver-kotlin-coroutine:5.7.0");
+            add("org.mongodb:bson-kotlinx:5.7.0");
+            add("org.mongodb:mongodb-driver-reactivestreams:5.7.0");
             add("org.reactivestreams:reactive-streams:1.0.4");
 
             add("io.github.g00fy2:versioncompare:1.5.0");
