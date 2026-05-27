@@ -32,7 +32,7 @@ dependencies {
 
     compileOnly("org.incendo:cloud-paper:2.0.0-beta.15")
 
-    compileOnly("dev.rosewood:rosestacker:1.5.30")
+    compileOnly("dev.rosewood:rosestacker:1.5.41")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.milkbowl.vault:VaultAPI:1.7")
