@@ -30,7 +30,7 @@ dependencies {
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.1.0")
 
-    compileOnly("org.incendo:cloud-paper:2.0.0-beta.14")
+    compileOnly("org.incendo:cloud-paper:2.0.0-beta.15")
 
     compileOnly("dev.rosewood:rosestacker:1.5.30")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
