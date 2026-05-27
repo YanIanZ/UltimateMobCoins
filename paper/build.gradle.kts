@@ -39,7 +39,7 @@ dependencies {
     compileOnly("io.lumine:Mythic-Dist:5.2.1") // Mythic Mobs API
     compileOnly("io.th0rgal:oraxen:1.213.0")
 
-    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.5.0b")
+    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.1")
     compileOnly("com.willfp:eco:6.68.6")
     compileOnly("com.willfp:EcoMobs:10.19.0")
     compileOnly("org.betonquest:betonquest:2.2.1") { isTransitive = false }
