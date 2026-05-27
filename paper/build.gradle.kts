@@ -43,7 +43,7 @@ dependencies {
     compileOnly("com.willfp:eco:6.68.6")
     compileOnly("com.willfp:EcoMobs:10.19.0")
     compileOnly("org.betonquest:betonquest:2.2.1") { isTransitive = false }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8") // WorldGuard
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9") // WorldGuard
     compileOnly("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13")
     compileOnly("com.nexomc:nexo:1.21.0")
 
