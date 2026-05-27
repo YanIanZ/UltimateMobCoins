@@ -45,7 +45,7 @@ dependencies {
     compileOnly("org.betonquest:betonquest:2.2.1") { isTransitive = false }
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8") // WorldGuard
     compileOnly("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13")
-    compileOnly("com.nexomc:nexo:1.10.0")
+    compileOnly("com.nexomc:nexo:1.21.0")
 
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0") { isTransitive = false }
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0") { isTransitive = false }
