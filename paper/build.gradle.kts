@@ -36,7 +36,7 @@ dependencies {
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.milkbowl.vault:VaultAPI:1.7")
-    compileOnly("io.lumine:Mythic-Dist:5.2.1") // Mythic Mobs API
+    compileOnly("io.lumine:Mythic-Dist:5.6.1") // Mythic Mobs API
     compileOnly("io.th0rgal:oraxen:1.213.0")
 
     compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.1")
