@@ -11,7 +11,7 @@ object ExpiringMap {
      * @param <K, V> element types
      * @return a new expiring map
      */
-    fun <K, V> newExpiringMap(duration: Long, unit: TimeUnit): MutableMap<K, V> {
+    fun <K : Any, V> newExpiringMap(duration: Long, unit: TimeUnit): MutableMap<K, V> {
         return Caffeine.newBuilder().expireAfterAccess(duration, unit).build<K, V>().asMap()
     }
 }
