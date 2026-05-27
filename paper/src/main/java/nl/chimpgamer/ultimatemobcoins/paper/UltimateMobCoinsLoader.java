@@ -20,7 +20,7 @@ public class UltimateMobCoinsLoader implements PluginLoader {
             add("org.jetbrains.exposed:exposed-dao:0.60.0");
             add("org.jetbrains.exposed:exposed-jdbc:0.60.0");
             add("org.xerial:sqlite-jdbc:3.49.1.0");
-            add("org.mariadb.jdbc:mariadb-java-client:3.5.6");
+            add("org.mariadb.jdbc:mariadb-java-client:3.5.8");
             add("org.incendo:cloud-core:2.0.0");
             add("org.incendo:cloud-paper:2.0.0-beta.15");
             add("org.incendo:cloud-minecraft-extras:2.0.0-beta.15");
