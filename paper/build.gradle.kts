@@ -40,8 +40,8 @@ dependencies {
     compileOnly("io.th0rgal:oraxen:1.213.0")
 
     compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.1")
-    compileOnly("com.willfp:eco:6.68.6")
-    compileOnly("com.willfp:EcoMobs:10.19.0")
+    compileOnly("com.willfp:eco:7.6.2")
+    compileOnly("com.willfp:EcoMobs:11.6.0")
     compileOnly("org.betonquest:betonquest:2.2.1") { isTransitive = false }
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9") // WorldGuard
     compileOnly("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13")
