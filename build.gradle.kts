@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.text.SimpleDateFormat
 import java.util.*
 
-val exposedVersion = "0.60.0"
+val exposedVersion = "1.3.0"
 
 plugins {
     kotlin("jvm") version "2.3.21"
