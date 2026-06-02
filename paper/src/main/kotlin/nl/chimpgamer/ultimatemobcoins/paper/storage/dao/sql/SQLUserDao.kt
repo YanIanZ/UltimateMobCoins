@@ -9,7 +9,6 @@ import nl.chimpgamer.ultimatemobcoins.paper.storage.sql.UsersTable
 import nl.chimpgamer.ultimatemobcoins.paper.storage.sql.toUser
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.greater
-import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.suspendTransaction
 import java.math.BigDecimal
 import java.math.MathContext
