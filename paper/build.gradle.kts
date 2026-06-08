@@ -30,27 +30,27 @@ dependencies {
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-kotlin-ext:3.1.0")
 
-    compileOnly("org.incendo:cloud-paper:2.0.0-beta.14")
+    compileOnly("org.incendo:cloud-paper:2.0.0-beta.15")
 
-    compileOnly("dev.rosewood:rosestacker:1.5.30")
+    compileOnly("dev.rosewood:rosestacker:1.5.41")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.milkbowl.vault:VaultAPI:1.7")
-    compileOnly("io.lumine:Mythic-Dist:5.2.1") // Mythic Mobs API
-    compileOnly("io.th0rgal:oraxen:1.189.0")
+    compileOnly("io.lumine:Mythic-Dist:5.6.1") // Mythic Mobs API
+    compileOnly("io.th0rgal:oraxen:1.213.0")
 
-    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.5.0b")
-    compileOnly("com.willfp:eco:6.68.6")
-    compileOnly("com.willfp:EcoMobs:10.19.0")
+    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.1")
+    compileOnly("com.willfp:eco:7.6.2")
+    compileOnly("com.willfp:EcoMobs:11.6.0")
     compileOnly("org.betonquest:betonquest:2.2.1") { isTransitive = false }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8") // WorldGuard
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9") // WorldGuard
     compileOnly("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13")
-    compileOnly("com.nexomc:nexo:1.10.0")
+    compileOnly("com.nexomc:nexo:1.21.0")
 
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0") { isTransitive = false }
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0") { isTransitive = false }
 
-    compileOnly(platform("org.mongodb:mongodb-driver-bom:5.4.0"))
+    compileOnly(platform("org.mongodb:mongodb-driver-bom:5.7.0"))
     compileOnly("org.mongodb:mongodb-driver-kotlin-coroutine") {
         exclude("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
     }

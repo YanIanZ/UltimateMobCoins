@@ -1,7 +1,7 @@
 package nl.chimpgamer.ultimatemobcoins.paper.storage.sql
 
-import org.jetbrains.exposed.dao.id.UUIDTable
-import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.dao.id.java.UUIDTable
 import java.math.BigDecimal
 
 object UsersTable : UUIDTable("users", "uuid") {

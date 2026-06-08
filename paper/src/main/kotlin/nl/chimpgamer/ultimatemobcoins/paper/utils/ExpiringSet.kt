@@ -11,7 +11,7 @@ object ExpiringSet {
      * @param <E> element type
      * @return a new expiring set
      */
-    fun <E> newExpiringSet(duration: Long, unit: TimeUnit): MutableSet<E> {
+    fun <E : Any> newExpiringSet(duration: Long, unit: TimeUnit): MutableSet<E> {
         return Collections.newSetFromMap(ExpiringMap.newExpiringMap<E, Boolean>(duration, unit))
     }
 }

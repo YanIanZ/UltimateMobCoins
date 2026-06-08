@@ -5,12 +5,12 @@ import com.zaxxer.hikari.HikariDataSource
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
 import nl.chimpgamer.ultimatemobcoins.paper.storage.dao.sql.SQLUserDao
 import nl.chimpgamer.ultimatemobcoins.paper.storage.sql.UsersTable
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.DatabaseConfig
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.name
-import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.name
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.core.DatabaseConfig
 
 class SQLDatabaseManager(private val plugin: UltimateMobCoinsPlugin) : DatabaseManager(plugin) {
     private lateinit var database: Database
@@ -97,13 +97,13 @@ class SQLDatabaseManager(private val plugin: UltimateMobCoinsPlugin) : DatabaseM
             transaction {
                 SchemaUtils.create(UsersTable)
 
-                if (plugin.settingsConfig.storageType.lowercase() != "sqlite") {
+                /*if (plugin.settingsConfig.storageType.lowercase() != "sqlite") {
                     // Workaround for Exposed bug https://youtrack.jetbrains.com/issue/EXPOSED-467/Decimal-type-precision-and-scale-not-checked-by-SchemaUtils
                     // Not supported on SQLite
                     exec(UsersTable.coins.modifyStatement().single())
                     exec(UsersTable.coinsCollected.modifyStatement().single())
                     exec(UsersTable.coinsSpent.modifyStatement().single())
-                }
+                }*/
             }
         }
     }

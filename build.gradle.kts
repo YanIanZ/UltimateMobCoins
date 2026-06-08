@@ -2,17 +2,17 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.text.SimpleDateFormat
 import java.util.*
 
-val exposedVersion = "0.60.0"
+val exposedVersion = "1.3.0"
 
 plugins {
-    kotlin("jvm") version "2.2.21"
-    id("com.gradleup.shadow") version "9.3.0"
+    kotlin("jvm") version "2.3.21"
+    id("com.gradleup.shadow") version "9.4.1"
     `maven-publish`
 }
 
 allprojects {
     group = "nl.chimpgamer.ultimatemobcoins"
-    version = "2.0.2"
+    version = "2.1.0"
 
     repositories {
         mavenCentral()
@@ -37,7 +37,7 @@ subprojects {
 
         compileOnly("dev.dejvokep:boosted-yaml:1.3.7")
         compileOnly("org.incendo:cloud-core:2.0.0")
-        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.14")
+        compileOnly("org.incendo:cloud-minecraft-extras:2.0.0-beta.15")
         compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
 
         compileOnly("org.jetbrains.exposed:exposed-core:$exposedVersion") {
@@ -51,8 +51,8 @@ subprojects {
         }
         compileOnly("com.zaxxer:HikariCP:7.0.2")
         compileOnly("org.xerial:sqlite-jdbc:3.49.1.0")
-        compileOnly("org.mariadb.jdbc:mariadb-java-client:3.5.6")
-        compileOnly("com.github.ben-manes.caffeine:caffeine:3.1.8")
+        compileOnly("org.mariadb.jdbc:mariadb-java-client:3.5.8")
+        compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.4")
         compileOnly("io.github.g00fy2:versioncompare:1.5.0")
     }
 

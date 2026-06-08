@@ -15,26 +15,26 @@ public class UltimateMobCoinsLoader implements PluginLoader {
     @Override
     public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
         var dependencies = new ArrayList<String>() {{
-            add("org.jetbrains.kotlin:kotlin-stdlib:2.2.21");
-            add("org.jetbrains.exposed:exposed-core:0.60.0");
-            add("org.jetbrains.exposed:exposed-dao:0.60.0");
-            add("org.jetbrains.exposed:exposed-jdbc:0.60.0");
+            add("org.jetbrains.kotlin:kotlin-stdlib:2.3.21");
+            add("org.jetbrains.exposed:exposed-core:1.3.0");
+            add("org.jetbrains.exposed:exposed-dao:1.3.0");
+            add("org.jetbrains.exposed:exposed-jdbc:1.3.0");
             add("org.xerial:sqlite-jdbc:3.49.1.0");
-            add("org.mariadb.jdbc:mariadb-java-client:3.5.6");
+            add("org.mariadb.jdbc:mariadb-java-client:3.5.8");
             add("org.incendo:cloud-core:2.0.0");
-            add("org.incendo:cloud-paper:2.0.0-beta.14");
-            add("org.incendo:cloud-minecraft-extras:2.0.0-beta.14");
+            add("org.incendo:cloud-paper:2.0.0-beta.15");
+            add("org.incendo:cloud-minecraft-extras:2.0.0-beta.15");
             add("org.incendo:cloud-kotlin-coroutines:2.0.0");
             add("dev.dejvokep:boosted-yaml:1.3.7");
             add("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.13");
-            add("com.github.ben-manes.caffeine:caffeine:3.1.8");
+            add("com.github.ben-manes.caffeine:caffeine:3.2.4");
             add("com.zaxxer:HikariCP:7.0.2");
             add("org.postgresql:postgresql:42.7.5");
 
-            add("org.mongodb:mongodb-driver-core:5.4.0");
-            add("org.mongodb:mongodb-driver-kotlin-coroutine:5.4.0");
-            add("org.mongodb:bson-kotlinx:5.4.0");
-            add("org.mongodb:mongodb-driver-reactivestreams:5.4.0");
+            add("org.mongodb:mongodb-driver-core:5.7.0");
+            add("org.mongodb:mongodb-driver-kotlin-coroutine:5.7.0");
+            add("org.mongodb:bson-kotlinx:5.7.0");
+            add("org.mongodb:mongodb-driver-reactivestreams:5.7.0");
             add("org.reactivestreams:reactive-streams:1.0.4");
 
             add("io.github.g00fy2:versioncompare:1.5.0");
