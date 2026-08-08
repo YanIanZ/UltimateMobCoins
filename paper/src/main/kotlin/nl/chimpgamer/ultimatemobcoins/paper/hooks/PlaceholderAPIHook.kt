@@ -2,6 +2,7 @@ package nl.chimpgamer.ultimatemobcoins.paper.hooks
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsPlugin
+import nl.chimpgamer.ultimatemobcoins.paper.models.User
 import nl.chimpgamer.ultimatemobcoins.paper.models.menu.RefreshableShopMenu
 import nl.chimpgamer.ultimatemobcoins.paper.utils.NumberFormatter
 import org.bukkit.entity.Player
@@ -21,6 +22,14 @@ class PlaceholderAPIHook(private val plugin: UltimateMobCoinsPlugin) : Placehold
     }
 
     override fun onPlaceholderRequest(player: Player?, params: String): String? {
+        val nonPlayerPlaceholdersResult = nonPlayerPlaceholders(params)
+        if (nonPlayerPlaceholdersResult != null) return nonPlayerPlaceholdersResult
+
+        if (player == null) return null
+        return playerPlaceholders(player, params)
+    }
+
+    private fun nonPlayerPlaceholders(params: String): String? {
         if (params.startsWith("shop_refresh_time_")) {
             val shopName = params.replace("shop_refresh_time_", "")
             val menu = plugin.shopMenus[shopName]
@@ -33,35 +42,49 @@ class PlaceholderAPIHook(private val plugin: UltimateMobCoinsPlugin) : Placehold
             return plugin.spinnerConfig.usageCosts.toString()
         }
 
+        var topType: String? = null
+        var topUser: User? = null
         if (params.startsWith("leaderboard_mobcoins_", ignoreCase = true)) {
             val newParams = params.replaceFirst("leaderboard_mobcoins_", "")
             val position = newParams.take(newParams.indexOfFirst { it == '_' }).toInt()
 
-            val type = newParams.replaceFirst("${position}_", "")
-            val user = plugin.leaderboardManager.getTopMobCoinsPosition(position) ?: return "..."
-            return when (type.lowercase()) {
-                "name" -> user.username
-                "value" -> user.coins.toString()
-                "value_formatted" -> user.coinsPretty
-                else -> null
-            }
+            topType = newParams.replaceFirst("${position}_", "")
+            topUser = plugin.leaderboardManager.getTopMobCoinsPosition(position) ?: return "..."
         }
         if (params.startsWith("leaderboard_mobcoins_grind_", ignoreCase = true)) {
             val newParams = params.replaceFirst("leaderboard_mobcoins_grind_", "")
             val position = newParams.take(newParams.indexOfFirst { it == '_' }).toInt()
 
-            val type = newParams.replaceFirst("${position}_", "")
-            val user = plugin.leaderboardManager.getTopMobCoinsGrindPosition(position) ?: return "..."
-            return when (type.lowercase()) {
-                "name" -> user.username
-                "value" -> user.coins.toString()
-                "value_formatted" -> user.coinsPretty
+            topType = newParams.replaceFirst("${position}_", "")
+            topUser = plugin.leaderboardManager.getTopMobCoinsGrindPosition(position) ?: return "..."
+        }
+        if (topType != null && topUser != null) {
+            return when (topType.lowercase()) {
+                "name" -> topUser.username
+                "value" -> topUser.coins.toString()
+                "value_formatted" -> topUser.coinsPretty
                 else -> null
             }
         }
+        return null
+    }
 
-        if (player == null) return null
+    private fun playerPlaceholders(player: Player, params: String): String? {
         val user = plugin.userManager.getIfLoaded(player) ?: return null
+
+        val balanceResult = playerBalancePlaceholders(user, params)
+        if (balanceResult != null) return balanceResult
+
+        val collectedResult = playerCollectedPlaceholders(user, params)
+        if (collectedResult != null) return collectedResult
+
+        val spentResult = playerSpentPlaceholders(user, params)
+        if (spentResult != null) return spentResult
+
+        return null
+    }
+
+    private fun playerBalancePlaceholders(user: User, params: String): String? {
         if (params.equals("balance", ignoreCase = true)) {
             return user.coinsAsDouble.toString()
         }
@@ -77,7 +100,10 @@ class PlaceholderAPIHook(private val plugin: UltimateMobCoinsPlugin) : Placehold
         if (params.equals("balance_formatted_compact", ignoreCase = true)) {
             return NumberFormatter.compactDecimalFormat(user.coins)
         }
+        return null
+    }
 
+    private fun playerCollectedPlaceholders(user: User, params: String): String? {
         if (params.equals("collected", ignoreCase = true)) {
             return user.coinsCollectedAsDouble.toString()
         }
@@ -93,7 +119,10 @@ class PlaceholderAPIHook(private val plugin: UltimateMobCoinsPlugin) : Placehold
         if (params.equals("collected_formatted_compact", ignoreCase = true)) {
             return NumberFormatter.compactDecimalFormat(user.coinsCollected)
         }
+        return null
+    }
 
+    private fun playerSpentPlaceholders(user: User, params: String): String? {
         if (params.equals("spent", ignoreCase = true)) {
             return user.coinsSpentAsDouble.toString()
         }
