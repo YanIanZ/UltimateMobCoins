@@ -1,0 +1,53 @@
+package nl.chimpgamer.ultimatemobcoins.paper;
+
+import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
+import io.papermc.paper.plugin.loader.PluginLoader;
+import io.papermc.paper.plugin.loader.library.impl.MavenLibraryResolver;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.repository.RemoteRepository;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
+public class UltimateMobCoinsLoader implements PluginLoader {
+
+    @NotNull
+    private static ArrayList<String> getLibraries() {
+        var dependencies = new ArrayList<String>();
+        dependencies.add("org.jetbrains.kotlin:kotlin-stdlib:2.3.21");
+        dependencies.add("org.jetbrains.kotlin:kotlin-reflect:2.3.21");
+        dependencies.add("org.jetbrains.exposed:exposed-core:1.5.0");
+        dependencies.add("org.jetbrains.exposed:exposed-dao:1.5.0");
+        dependencies.add("org.jetbrains.exposed:exposed-jdbc:1.5.0");
+        dependencies.add("org.xerial:sqlite-jdbc:3.53.4.0");
+        dependencies.add("org.mariadb.jdbc:mariadb-java-client:3.5.10");
+        dependencies.add("org.postgresql:postgresql:42.7.13");
+        dependencies.add("com.zaxxer:HikariCP:7.1.0");
+        dependencies.add("org.incendo:cloud-core:2.1.0");
+        dependencies.add("org.incendo:cloud-minecraft-extras:2.0.0");
+        dependencies.add("org.incendo:cloud-paper:2.0.0");
+        dependencies.add("org.incendo:cloud-kotlin-coroutines:2.1.0");
+        dependencies.add("dev.dejvokep:boosted-yaml:1.3.7");
+        dependencies.add("com.github.ben-manes.caffeine:caffeine:3.2.4");
+        dependencies.add("io.github.g00fy2:versioncompare:1.5.0");
+        dependencies.add("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.5");
+        dependencies.add("org.mongodb:mongodb-driver-kotlin-coroutine:5.10.0");
+        dependencies.add("org.mongodb:bson-kotlinx:5.10.0");
+        dependencies.add("org.bstats:bstats-bukkit:3.2.1");
+        dependencies.add("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0");
+        dependencies.add("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0");
+        return dependencies;
+    }
+
+    @Override
+    public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
+        var dependencies = getLibraries();
+
+        var mavenLibraryResolver = new MavenLibraryResolver();
+        dependencies.forEach(dependency -> mavenLibraryResolver.addDependency(new Dependency(new DefaultArtifact(dependency), null)));
+        mavenLibraryResolver.addRepository(new RemoteRepository.Builder("paper", "default", "https://repo.papermc.io/repository/maven-public/").build());
+
+        classpathBuilder.addLibrary(mavenLibraryResolver);
+    }
+}
