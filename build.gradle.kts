@@ -71,9 +71,6 @@ subprojects {
             }
 
             archiveFileName.set("UltimateMobCoins-${project.name.capitalizeWords()}-v${project.version}.jar")
-
-            relocate("org.bstats")
-            relocate("com.github.shynixn.mccoroutine")
         }
 
         build {
@@ -85,14 +82,6 @@ subprojects {
 tasks {
     jar {
         enabled = false
-    }
-}
-
-fun ShadowJar.relocate(vararg dependencies: String) {
-    dependencies.forEach {
-        val split = it.split(".")
-        val name = split.last()
-        relocate(it, "${project.group}.libs.$name")
     }
 }
 

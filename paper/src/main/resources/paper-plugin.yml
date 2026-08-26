@@ -5,7 +5,6 @@ api-version: '1.21'
 authors:
   - ChimpGamer
 folia-supported: true
-loader: nl.chimpgamer.ultimatemobcoins.paper.UltimateMobCoinsLoader
 
 build-date: ${buildDate}
 build-number: ${buildNumber}

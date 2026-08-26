@@ -34,7 +34,7 @@ import kotlin.random.Random
 class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
     private val spinnerPrizesMenu = SpinnerPrizesMenu(plugin)
 
-    private val paginationBuilder = Pagination.builder()
+    private val paginationBuilder: Pagination = Pagination.builder()
         .width(53)
         .resultsPerPage(17)
         .renderer(object : Pagination.Renderer {
@@ -42,6 +42,7 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
                 return "<gray>There are no entries!".parse()
             }
         })
+        .create()
 
     fun registerCommands(commandManager: CommandManager<CommandSender>, name: String, vararg aliases: String) {
         val basePermission = "ultimatemobcoins.command.mobcoins"
@@ -510,7 +511,7 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
                 plugin.userManager.getTopMobCoins().forEach { user ->
                     rows.add(plugin.messagesConfig.mobCoinsTopEntry.parse(mapOf("player_name" to user.username, "mobcoins" to NumberFormatter.displayCurrency(user.coins))))
                 }
-                val render = paginationBuilder.build(
+                val render = paginationBuilder.paginate(
                     plugin.messagesConfig.mobCoinsTopTitle.parse(), { value: Component?, index: Int ->
                         listOf(
                             value?.replaceText { it.once().matchLiteral("<position>").replacement(Component.text(index + 1)).build() }
@@ -533,7 +534,7 @@ class MobCoinsCommand(private val plugin: UltimateMobCoinsPlugin) {
                 plugin.userManager.getGrindTop().forEach { user ->
                     rows.add(plugin.messagesConfig.mobCoinsGrindTopEntry.parse(mapOf("player_name" to user.username, "mobcoins" to NumberFormatter.displayCurrency(user.coinsCollected))))
                 }
-                val render = paginationBuilder.build(
+                val render = paginationBuilder.paginate(
                     plugin.messagesConfig.mobCoinsGrindTopTitle.parse(), { value: Component?, index: Int ->
                         listOf(
                             value?.replaceText { it.once().matchLiteral("<position>").replacement(Component.text(index + 1)).build() }

@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.spigot.dependency.loader)
+}
+
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 
@@ -19,8 +23,6 @@ repositories {
 
     maven("https://maven.enginehub.org/repo/") // WorldGuard Repository
 
-    maven("https://repo.networkmanager.xyz/repository/maven-public/") // RyseInventory Repository
-
     maven("https://repo.nexomc.com/releases") // Nexo Repository
 }
 
@@ -28,42 +30,18 @@ dependencies {
     val kotlinGroupId = "org.jetbrains.kotlin"
     compileOnly(kotlin("stdlib"))
 
-    compileOnly(libs.adventure.text.feature.pagination) { isTransitive = false }
-
-    compileOnly(libs.boosted.yaml)
-    compileOnly(libs.cloud.core)
-    compileOnly(libs.cloud.minecraft.extras)
-    compileOnly(libs.cloud.kotlin.coroutines)
-
-    compileOnly(libs.exposed.core) {
-        exclude(kotlinGroupId)
-    }
-    compileOnly(libs.exposed.dao) {
-        exclude(kotlinGroupId)
-    }
-    compileOnly(libs.exposed.jdbc) {
-        exclude(kotlinGroupId)
-    }
-    compileOnly(libs.hikaricp)
-    compileOnly(libs.sqlite.jdbc)
-    compileOnly(libs.mariadb.java.client)
-    compileOnly(libs.caffeine)
-    compileOnly(libs.versioncompare)
-
+    // Plugin APIs provided by the server / installed plugins at runtime (compile-only)
     compileOnly(libs.paper.api)
 
     compileOnly(libs.miniplaceholders.api)
     compileOnly(libs.miniplaceholders.kotlin.ext)
 
-    compileOnly(libs.cloud.paper)
-
     compileOnly(libs.rosestacker)
     compileOnly(libs.headdatabase.api)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api)
-    compileOnly(libs.mythic.dist) // Mythic Mobs API
+    compileOnly(libs.mythic.dist)
     compileOnly(libs.oraxen)
-
     compileOnly(libs.itemsadder.api)
     compileOnly(libs.eco)
     compileOnly(libs.ecomobs)
@@ -71,18 +49,37 @@ dependencies {
         exclude("dev.faststats.metrics", "bukkit")
         exclude("de.themoep", "minedown-adventure")
     }
-    compileOnly(libs.worldguard.bukkit) // WorldGuard
-    compileOnly(libs.ryseinventory.plugin)
+    compileOnly(libs.worldguard.bukkit)
     compileOnly(libs.nexo)
 
-    compileOnly(platform(libs.mongodb.driver.bom))
-    compileOnly(libs.mongodb.driver.kotlin.coroutine) {
-        exclude("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
-    }
-    compileOnly(libs.bson.kotlinx)
+    // Runtime libraries loaded via the Spigot/Paper library loader (Maven Central only).
+    // These are downloaded at runtime, so they must NOT be shaded or relocated.
+    spigot("org.jetbrains.kotlin", "kotlin-stdlib", libs.versions.kotlin.get())
+    spigot("org.jetbrains.kotlin", "kotlin-reflect", libs.versions.kotlin.get())
 
-    implementation(libs.mccoroutine.folia.api) { isTransitive = false }
-    implementation(libs.mccoroutine.folia.core) { isTransitive = false }
+    spigot(libs.exposed.core)
+    spigot(libs.exposed.dao)
+    spigot(libs.exposed.jdbc)
 
-    implementation(libs.bstats.bukkit)
+    spigot(libs.sqlite.jdbc)
+    spigot(libs.mariadb.java.client)
+    spigot(libs.hikaricp)
+    spigot(libs.postgresql)
+
+    spigot(libs.cloud.core)
+    spigot(libs.cloud.minecraft.extras)
+    spigot(libs.cloud.paper)
+    spigot(libs.cloud.kotlin.coroutines)
+
+    spigot(libs.boosted.yaml)
+    spigot(libs.caffeine)
+    spigot(libs.versioncompare)
+    spigot(libs.ryseinventory.plugin)
+
+    spigot(libs.mongodb.driver.kotlin.coroutine)
+    spigot(libs.bson.kotlinx)
+
+    spigot(libs.bstats.bukkit)
+    spigot(libs.mccoroutine.folia.api)
+    spigot(libs.mccoroutine.folia.core)
 }
