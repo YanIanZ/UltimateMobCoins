@@ -24,6 +24,11 @@ repositories {
     maven("https://maven.enginehub.org/repo/") // WorldGuard Repository
 
     maven("https://repo.nexomc.com/releases") // Nexo Repository
+
+    maven {
+        name = "faststatsReleases"
+        url = uri("https://repo.faststats.dev/releases")
+    }
 }
 
 dependencies {
@@ -79,7 +84,10 @@ dependencies {
     spigot(libs.mongodb.driver.kotlin.coroutine)
     spigot(libs.bson.kotlinx)
 
-    spigot(libs.bstats.bukkit)
+
     spigot(libs.mccoroutine.folia.api)
     spigot(libs.mccoroutine.folia.core)
+
+    // Shaded into the final jar via shadowJar
+    implementation(libs.faststats.bukkit)
 }

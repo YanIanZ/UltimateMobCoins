@@ -34,7 +34,6 @@ public class UltimateMobCoinsLoader implements PluginLoader {
         dependencies.add("io.github.rysefoxx.inventory:RyseInventory-Plugin:1.6.5");
         dependencies.add("org.mongodb:mongodb-driver-kotlin-coroutine:5.10.0");
         dependencies.add("org.mongodb:bson-kotlinx:5.10.0");
-        dependencies.add("org.bstats:bstats-bukkit:3.2.1");
         dependencies.add("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0");
         dependencies.add("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0");
         return dependencies;

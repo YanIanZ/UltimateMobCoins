@@ -33,8 +33,8 @@ import nl.chimpgamer.ultimatemobcoins.paper.models.menu.ShopMenu
 import nl.chimpgamer.ultimatemobcoins.paper.models.menu.action.ActionType
 import nl.chimpgamer.ultimatemobcoins.paper.utils.LogWriter
 import nl.chimpgamer.ultimatemobcoins.paper.utils.updatechecker.ModrinthUpdateChecker
-import org.bstats.bukkit.Metrics
-import org.bstats.charts.SimplePie
+import dev.faststats.Metrics
+import dev.faststats.bukkit.BukkitContext
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.event.Event
 import org.bukkit.event.entity.EntityDeathEvent
@@ -51,7 +51,9 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration.Companion.minutes
 
 class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
-    private val bstatsId = 19914
+    private val faststatsContext = BukkitContext.Factory(this, "54d4c1d08d0a84a363394fb3ef4fa4ca")
+        .metrics(Metrics.Factory::create)
+        .create()
 
     val shopsFolder = dataFolder.resolve("shops")
     val shopMenus = HashMap<String, Menu>()
@@ -175,8 +177,7 @@ class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
 
         cloudCommandManager.loadCommands()
 
-        val metrics = Metrics(this, bstatsId)
-        metrics.addCustomChart(SimplePie("storage_type") { settingsConfig.storageType.lowercase() })
+        faststatsContext.ready()
 
         plugin.launch(plugin.asyncDispatcher, CoroutineStart.UNDISPATCHED) {
             modrinthUpdateChecker.checkUpdate()
@@ -196,6 +197,7 @@ class UltimateMobCoinsPlugin : SuspendingJavaPlugin() {
     }
 
     override fun onDisable() {
+        faststatsContext.shutdown()
         closeMenus()
         saveShopItemsData()
 

@@ -32,7 +32,7 @@ ryseinventory = "1.6.5"
 nexo = "1.27.0"
 mccoroutine = "2.22.0"
 mongodb = "5.10.0"
-bstats = "3.2.1"
+faststats = "0.29.4"
 
 [libraries]
 exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed" }
@@ -78,7 +78,7 @@ postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "pos
 mongodb-driver-kotlin-coroutine = { group = "org.mongodb", name = "mongodb-driver-kotlin-coroutine", version.ref = "mongodb" }
 bson-kotlinx = { group = "org.mongodb", name = "bson-kotlinx", version.ref = "mongodb" }
 
-bstats-bukkit = { group = "org.bstats", name = "bstats-bukkit", version.ref = "bstats" }
+faststats-bukkit = { group = "dev.faststats.metrics", name = "bukkit", version.ref = "faststats" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
